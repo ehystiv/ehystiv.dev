@@ -80,7 +80,6 @@ export const projects: Project[] = [
         language: 'Vue',
         topics: ['Nuxt.js', 'Vuetify', 'LARP', 'Web App'],
         githubUrl: 'https://github.com/ehystiv/FulcronGRV-website',
-        homepage: 'https://fulcrongrv.it',
         featured: true
     }
 ];
