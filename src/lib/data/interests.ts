@@ -28,15 +28,6 @@ export const interests: Interest[] = [
         tags: ['Web Server', 'Go', 'HTTPS']
     },
     {
-        name: 'shadcn-vue',
-        description: {
-            en: 'Vue port of shadcn-ui. Re-usable components built with Radix Vue and Tailwind CSS.',
-            it: 'Porting Vue di shadcn-ui. Componenti riutilizzabili costruiti con Radix Vue e Tailwind CSS.'
-        },
-        url: 'https://github.com/unovue/shadcn-vue',
-        tags: ['Vue', 'UI', 'Tailwind']
-    },
-    {
         name: 'scramble',
         description: {
             en: 'Modern Laravel OpenAPI (Swagger) documentation generator. No PHPDoc annotations required.',
@@ -44,15 +35,6 @@ export const interests: Interest[] = [
         },
         url: 'https://github.com/dedoc/scramble',
         tags: ['Laravel', 'API', 'Docs']
-    },
-    {
-        name: 'brutal',
-        description: {
-            en: 'A neobrutalism Astro starter theme. Inspiration for this very website.',
-            it: 'Tema starter Astro in stile neobrutalista. Ispirazione per questo sito.'
-        },
-        url: 'https://github.com/ElianCodes/brutal',
-        tags: ['Astro', 'Theme', 'Brutalism']
     },
     {
         name: 'slides',
@@ -64,24 +46,6 @@ export const interests: Interest[] = [
         tags: ['Terminal', 'Slides', 'Go']
     },
     {
-        name: 'laravel-debugbar',
-        description: {
-            en: 'Debugbar for Laravel. Essential tool for any Laravel developer.',
-            it: 'Debugbar per Laravel. Strumento essenziale per ogni sviluppatore Laravel.'
-        },
-        url: 'https://github.com/barryvdh/laravel-debugbar',
-        tags: ['Laravel', 'Debug', 'PHP']
-    },
-    {
-        name: 'puter',
-        description: {
-            en: 'The Internet Computer! Free, Open-Source, and Self-Hostable web desktop OS.',
-            it: 'Il Computer Internet! OS desktop web gratuito, Open-Source e self-hostable.'
-        },
-        url: 'https://github.com/HeyPuter/puter',
-        tags: ['OS', 'Web', 'Self-Hosted']
-    },
-    {
         name: 'GhostTrack',
         description: {
             en: 'Useful tool to track location or mobile number',
@@ -89,5 +53,50 @@ export const interests: Interest[] = [
         },
         url: 'https://github.com/HunxByts/GhostTrack',
         tags: ['osint', 'hacking', 'pentesting']
+    },
+    {
+        name: "Vue PDF",
+        description: {
+            en: "Vue Custom Renderer for PDF Files",
+            it: "Renderer personalizzato per i file PDF in Vue"
+        },
+        url: "https://github.com/Ceereals/vue-pdf",
+        tags: ['Vue', 'PDF', 'Renderer']
+    },
+    {
+        name: "FilePizza",
+        description: {
+            en: "🍕 Peer-to-peer file transfers in your browser",
+            it: "🍕 Trasferimenti di file peer-to-peer nel tuo browser"
+        },
+        url: "https://github.com/kern/filepizza",
+        tags: ['File Transfer', 'Peer-to-Peer', 'Browser']
+    },
+    {
+        name: "Sidekick",
+        description: {
+            en: "Bare metal to production ready in mins; your own fly server on your VPS.",
+            it: "Bare metal a prodotto pronto in minuti; il tuo server fly su VPS."
+        },
+        url: "https://github.com/MightyMoud/sidekick",
+        tags: ['VPS', 'Server']
+    },
+    {
+        name: "Vito",
+        description: {
+            en: "Free and Self-Hosted Server Management Tool",
+            it: "Strumento di gestione server gratuito e self-hosted"
+        },
+        url: "https://github.com/vitodeploy/vito",
+        tags: ['Server', 'Management', 'Tool']
+    },
+    {
+        name: "Better Commits",
+        description: {
+            en: "A CLI for creating better commits following the conventional commits specification",
+            it: "Strumento CLI per creare commit migliori seguendo la specifica dei commit convenzionali"
+        },
+        url: "https://github.com/Everduin94/better-commits",
+        tags: ['Commit', 'Tool', 'CLI']
     }
 ];
