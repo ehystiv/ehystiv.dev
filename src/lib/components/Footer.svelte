@@ -89,9 +89,7 @@
 			<span class="font-mono text-xs">
 				© {currentYear} Stefano Bichicchi. {t.footer.rights}
 			</span>
-			<span class="font-mono text-xs text-[var(--color-muted)]">
-				{t.footer.built_with}
-			</span>
+			<span class="font-mono text-xs text-[var(--color-muted)]"> </span>
 		</div>
 	</div>
 </footer>

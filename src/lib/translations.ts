@@ -33,7 +33,6 @@ export const translations = {
             quick_links: 'Link Rapidi',
             social: 'Social',
             rights: 'Tutti i diritti riservati.',
-            built_with: 'Built with SvelteKit + Tailwind • Stile Brutalista'
         },
         nav: {
             projects: 'Progetti',
@@ -74,7 +73,6 @@ export const translations = {
             quick_links: 'Quick Links',
             social: 'Social',
             rights: 'All rights reserved.',
-            built_with: 'Built with SvelteKit + Tailwind • Brutalist Style'
         },
         nav: {
             projects: 'Projects',
