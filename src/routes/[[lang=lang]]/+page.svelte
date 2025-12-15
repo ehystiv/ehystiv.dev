@@ -1,10 +1,14 @@
 <script lang="ts">
 	import InterestCard from '$lib/components/InterestCard.svelte';
+	import JokeMarquee from '$lib/components/JokeMarquee.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import { interests } from '$lib/data/interests';
 	import { projects } from '$lib/data/projects';
 	import { locale } from '$lib/stores/lang';
 	import { translations } from '$lib/translations';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	const skills = [
 		{ category: 'Backend', items: ['PHP', 'Laravel', 'NestJS', 'Node.js', 'Python'] },
@@ -145,6 +149,8 @@
 		</div>
 	</div>
 </section>
+
+<JokeMarquee joke={data.joke} />
 
 <!-- About Section -->
 <section id="about" class="scroll-mt-4">
