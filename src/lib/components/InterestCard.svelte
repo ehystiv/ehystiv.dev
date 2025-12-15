@@ -17,7 +17,10 @@
 		>
 			{interest.name}
 		</h3>
-		<span class="text-xl font-bold opacity-0 transition-opacity group-hover:opacity-100">↗</span>
+		<span
+			class="text-xl font-bold opacity-0 transition-opacity group-hover:text-[var(--color-accent)] group-hover:opacity-100"
+			>↗</span
+		>
 	</div>
 
 	<p
