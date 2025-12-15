@@ -83,13 +83,25 @@
 
 	<!-- Copyright bar -->
 	<div
-		class="border-t border-t-[var(--border-thin)] bg-[var(--color-fg)] px-6 py-3 text-[var(--color-bg)]"
+		class="overflow-hidden border-t border-t-[var(--border-thin)] bg-[var(--color-fg)] py-3 text-[var(--color-bg)]"
 	>
-		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 sm:flex-row">
-			<span class="font-mono text-xs">
-				© {currentYear} Stefano Bichicchi. {t.footer.rights}
-			</span>
-			<span class="font-mono text-xs text-[var(--color-muted)]"> </span>
+		<div class="flex whitespace-nowrap">
+			<!-- First copy -->
+			<div class="animate-marquee flex items-center gap-8 pl-8">
+				{#each Array(4) as _}
+					<span class="font-mono text-xs font-bold tracking-wider uppercase">
+						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
+					</span>
+				{/each}
+			</div>
+			<!-- Second copy for seamless loop -->
+			<div class="animate-marquee aria-hidden flex items-center gap-8 pl-8" aria-hidden="true">
+				{#each Array(4) as _}
+					<span class="font-mono text-xs font-bold tracking-wider uppercase">
+						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
+					</span>
+				{/each}
+			</div>
 		</div>
 	</div>
 </footer>
