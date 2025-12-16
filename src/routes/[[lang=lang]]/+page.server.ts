@@ -44,7 +44,6 @@ export const load: PageServerLoad = async () => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data[1]);
                 return data.map((repo: any) => ({
                     name: repo.name,
                     description: {
