@@ -2,7 +2,6 @@
 	import InterestCard from '$lib/components/InterestCard.svelte';
 	import JokeMarquee from '$lib/components/JokeMarquee.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
-	import { interests } from '$lib/data/interests';
 	import { projects } from '$lib/data/projects';
 	import { locale } from '$lib/stores/lang';
 	import { translations } from '$lib/translations';
@@ -16,6 +15,12 @@
 		{ category: 'DevOps', items: ['Docker', 'Terraform', 'CI/CD', 'Linux'] },
 		{ category: 'Database', items: ['MySQL', 'PostgreSQL', 'Redis', 'MongoDB'] }
 	];
+
+	let visibleInterestsCount = 8;
+
+	function showMoreInterests() {
+		visibleInterestsCount += 8;
+	}
 </script>
 
 <!-- Hero Section -->
@@ -143,10 +148,22 @@
 		</div>
 
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-			{#each interests as interest}
+			{#each data.interests.slice(0, visibleInterestsCount) as interest}
 				<InterestCard {interest} />
 			{/each}
 		</div>
+
+		<!-- Show more button -->
+		{#if visibleInterestsCount < data.interests.length}
+			<div class="mt-8 text-center">
+				<button
+					on:click={showMoreInterests}
+					class="btn-brutal inline-block cursor-pointer bg-[var(--color-bg)] text-[var(--color-fg)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]"
+				>
+					{translations[$locale].inspirations.show_more}
+				</button>
+			</div>
+		{/if}
 	</div>
 </section>
 

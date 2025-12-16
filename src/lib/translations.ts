@@ -17,7 +17,8 @@ export const translations = {
         inspirations: {
             pretitle: '// Cosa seguo',
             title: 'INSPIRATIONS',
-            description: 'Una collezione curata di strumenti, librerie e progetti che trovo interessanti o che uso quotidianamente.'
+            description: 'Una collezione curata di strumenti, librerie e progetti che trovo interessanti o che uso quotidianamente.',
+            show_more: 'Mostra altri'
         },
         about: {
             pretitle: '// Chi sono',
@@ -57,7 +58,8 @@ export const translations = {
         inspirations: {
             pretitle: '// What I follow',
             title: 'INSPIRATIONS',
-            description: 'A curated collection of tools, libraries, and projects I find interesting or use daily.'
+            description: 'A curated collection of tools, libraries, and projects I find interesting or use daily.',
+            show_more: 'Show more'
         },
         about: {
             pretitle: '// Who I am',
