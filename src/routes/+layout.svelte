@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
@@ -10,7 +10,7 @@
 	let currentTime = $state('');
 
 	$effect(() => {
-		const langParam = $page.params.lang;
+		const langParam = page.params.lang;
 		if (langParam === 'en' || langParam === 'it') {
 			$locale = langParam;
 		} else {
