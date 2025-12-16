@@ -1,6 +1,12 @@
 import { env } from '$env/dynamic/private';
 import type { PageServerLoad } from './$types';
 
+export const config = {
+    isr: {
+        expiration: 60 * 60 * 6
+    }
+};
+
 export const load: PageServerLoad = async () => {
     const apiKey = env.API_TOKEN;
 
