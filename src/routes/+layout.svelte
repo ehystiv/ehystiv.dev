@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { locale } from '$lib/stores/lang';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import './layout.css';
 
 	let { children } = $props();
@@ -17,6 +19,8 @@
 			$locale = 'it';
 		}
 	});
+
+	injectAnalytics({ mode: dev ? 'development' : 'production' });
 </script>
 
 <svelte:head>
