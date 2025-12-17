@@ -6,6 +6,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import { locale } from '$lib/stores/lang';
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import './layout.css';
 
 	let { children } = $props();
@@ -21,6 +22,7 @@
 	});
 
 	injectAnalytics({ mode: dev ? 'development' : 'production' });
+	injectSpeedInsights();
 </script>
 
 <svelte:head>
