@@ -1,4 +1,5 @@
 <script lang="ts">
+	import profilePic from '$lib/assets/profile_pic.png';
 	import InterestCard from '$lib/components/InterestCard.svelte';
 	import JokeMarquee from '$lib/components/JokeMarquee.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
@@ -54,11 +55,21 @@
 			</p>
 
 			<!-- Name -->
-			<h1 class="mb-6 text-5xl leading-none font-bold md:text-7xl lg:text-8xl">
-				STEFANO
-				<br />
-				<span class="text-[var(--color-accent)]">BICHICCHI</span>
-			</h1>
+			<!-- Name and Profile Pic -->
+			<div class="mb-6 flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-8">
+				<h1 class="text-5xl leading-none font-bold md:text-7xl lg:text-8xl">
+					STEFANO
+					<br />
+					<span class="text-[var(--color-accent)]">BICHICCHI</span>
+				</h1>
+				<div class="relative h-24 w-24 shrink-0 md:h-32 md:w-32 lg:h-40 lg:w-40">
+					<img
+						src={profilePic}
+						alt="Stefano Bichicchi"
+						class="shadow-brutal h-full w-full rounded-full border-[var(--border-thick)] border-[var(--color-fg)] object-cover"
+					/>
+				</div>
+			</div>
 
 			<!-- Role -->
 			<div class="mb-8 flex items-center gap-4">
