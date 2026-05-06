@@ -65,7 +65,7 @@
 					{t.footer.social}
 				</h4>
 				<div class="flex gap-3">
-					{#each socials as social}
+					{#each socials as social (social.name)}
 						<a
 							href={social.url}
 							target="_blank"
@@ -88,7 +88,7 @@
 		<div class="flex whitespace-nowrap">
 			<!-- First copy -->
 			<div class="animate-marquee flex items-center gap-8 pl-8">
-				{#each Array(4) as _}
+				{#each Array(4) as _, i (i)}
 					<span class="font-mono text-xs font-bold tracking-wider uppercase">
 						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
 					</span>
@@ -96,7 +96,7 @@
 			</div>
 			<!-- Second copy for seamless loop -->
 			<div class="animate-marquee aria-hidden flex items-center gap-8 pl-8" aria-hidden="true">
-				{#each Array(4) as _}
+				{#each Array(4) as _, i (i)}
 					<span class="font-mono text-xs font-bold tracking-wider uppercase">
 						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
 					</span>

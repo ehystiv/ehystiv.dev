@@ -30,7 +30,7 @@
 	</p>
 
 	<div class="flex flex-wrap gap-2">
-		{#each interest.tags as tag}
+		{#each interest.tags as tag (tag)}
 			<span
 				class="tag text-[10px] group-hover:border-[var(--color-bg)] group-hover:bg-[var(--color-bg)] group-hover:text-[var(--color-fg)]"
 			>

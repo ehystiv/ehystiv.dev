@@ -83,7 +83,8 @@
 			<p class="mb-10 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
 				{translations[$locale].hero.description_pre}
 				<span class="font-bold text-[var(--color-fg)]">Laravel</span>,
-				<span class="font-bold text-[var(--color-fg)]">Vue.js</span>{translations[$locale].hero.description_post}
+				<span class="font-bold text-[var(--color-fg)]">Vue.js</span>{translations[$locale].hero
+					.description_post}
 			</p>
 
 			<!-- CTAs -->
@@ -125,7 +126,7 @@
 
 		<!-- Projects grid -->
 		<div class="grid gap-8 md:grid-cols-2">
-			{#each projects as project}
+			{#each projects as project (project.name)}
 				<ProjectCard {project} />
 			{/each}
 		</div>
@@ -161,7 +162,7 @@
 		</div>
 
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-			{#each data.interests.slice(0, visibleInterestsCount) as interest}
+			{#each data.interests.slice(0, visibleInterestsCount) as interest (interest.name)}
 				<InterestCard {interest} />
 			{/each}
 		</div>
@@ -227,7 +228,7 @@
 				</h3>
 
 				<div class="space-y-6">
-					{#each skills as skillGroup}
+					{#each skills as skillGroup (skillGroup.category)}
 						<div>
 							<h4
 								class="mb-3 font-mono text-sm font-bold tracking-wider text-[var(--color-accent)] uppercase"
@@ -235,7 +236,7 @@
 								{skillGroup.category}
 							</h4>
 							<div class="flex flex-wrap gap-2">
-								{#each skillGroup.items as skill}
+								{#each skillGroup.items as skill (skill)}
 									<span class="tag">{skill}</span>
 								{/each}
 							</div>

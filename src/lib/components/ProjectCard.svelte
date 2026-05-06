@@ -32,7 +32,7 @@
 
 		<!-- Topics -->
 		<div class="mb-5 flex flex-wrap gap-2">
-			{#each project.topics as topic}
+			{#each project.topics as topic (topic)}
 				<span class="tag text-[10px]">{topic}</span>
 			{/each}
 		</div>
