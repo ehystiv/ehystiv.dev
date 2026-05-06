@@ -14,17 +14,17 @@
 	let { children } = $props();
 	let currentTime = $state('');
 
-	const derivedLocale = $derived<'it' | 'en'>(
-		page.params.lang === 'en' ? 'en' : 'it'
-	);
+	const derivedLocale = $derived<'it' | 'en'>(page.params.lang === 'en' ? 'en' : 'it');
 
 	$effect(() => {
 		locale.set(derivedLocale);
 		document.documentElement.lang = derivedLocale;
 	});
 
-	injectAnalytics({ mode: dev ? 'development' : 'production' });
-	injectSpeedInsights();
+	if (!dev) {
+		injectAnalytics();
+		injectSpeedInsights();
+	}
 
 	const ogTitle = 'Stefano Bichicchi | Full Stack Developer';
 	const ogDescription = $derived(translations[derivedLocale].footer.description);

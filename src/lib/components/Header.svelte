@@ -156,7 +156,6 @@
 			</nav>
 		</div>
 	{/if}
-
 </header>
 
 <!-- Ticker / Time bar -->
@@ -197,8 +196,16 @@
 	}
 
 	@keyframes ticker-flip {
-		0%, 45% { transform: translateY(0); }
-		50%, 95% { transform: translateY(-33.333%); }
-		100%     { transform: translateY(-66.666%); }
+		0%,
+		45% {
+			transform: translateY(0);
+		}
+		50%,
+		95% {
+			transform: translateY(-33.333%);
+		}
+		100% {
+			transform: translateY(-66.666%);
+		}
 	}
 </style>
