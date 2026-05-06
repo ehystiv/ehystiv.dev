@@ -5,13 +5,11 @@
    BRUTALIST THEME - ehystiv.dev
    ============================================ */
 
-
-
 /* CSS Variables */
 :root {
 	--color-bg: #ffffff;
 	--color-fg: #000000;
-	--color-accent: #FF5500;
+	--color-accent: #ff5500;
 	--color-accent-alt: #00ff88;
 	--color-muted: #666666;
 
@@ -155,7 +153,9 @@ a:not(.no-underline):hover::after {
 }
 
 .hover-brutal {
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
 }
 
 .hover-brutal:hover {

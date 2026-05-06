@@ -1,3 +1,3 @@
 export const match = (param: string) => {
-    return param === 'en' || param === 'it';
+	return param === 'en' || param === 'it';
 };
