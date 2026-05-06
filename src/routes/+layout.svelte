@@ -14,25 +14,20 @@
 	let { children } = $props();
 	let currentTime = $state('');
 
+	const derivedLocale = $derived<'it' | 'en'>(
+		page.params.lang === 'en' ? 'en' : 'it'
+	);
+
 	$effect(() => {
-		const langParam = page.params.lang;
-		if (langParam === 'en' || langParam === 'it') {
-			$locale = langParam;
-		} else {
-			$locale = 'it';
-		}
-		document.documentElement.lang = $locale;
+		locale.set(derivedLocale);
+		document.documentElement.lang = derivedLocale;
 	});
 
 	injectAnalytics({ mode: dev ? 'development' : 'production' });
 	injectSpeedInsights();
 
-	const ogTitle = $derived(
-		$locale === 'en'
-			? 'Stefano Bichicchi | Full Stack Developer'
-			: 'Stefano Bichicchi | Full Stack Developer'
-	);
-	const ogDescription = $derived(translations[$locale].footer.description);
+	const ogTitle = 'Stefano Bichicchi | Full Stack Developer';
+	const ogDescription = $derived(translations[derivedLocale].footer.description);
 	const canonicalUrl = $derived(page.url.href);
 	const ogImageUrl = $derived(`${page.url.origin}${profilePic}`);
 </script>

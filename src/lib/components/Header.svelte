@@ -6,6 +6,17 @@
 
 	let { currentTime = $bindable('') } = $props();
 	let isMobileMenuOpen = $state(false);
+	let headerEl = $state<HTMLElement | null>(null);
+	let isSticky = $state(false);
+
+	$effect(() => {
+		if (!headerEl) return;
+		const observer = new IntersectionObserver(([entry]) => {
+			isSticky = !entry.isIntersecting;
+		});
+		observer.observe(headerEl);
+		return () => observer.disconnect();
+	});
 
 	const updateTime = () => {
 		const now = new Date();
@@ -23,7 +34,7 @@
 	});
 </script>
 
-<header class="border-brutal-thin border-t-0 border-r-0 border-b-4 border-l-0">
+<header bind:this={headerEl} class="border-brutal-thin border-t-0 border-r-0 border-b-4 border-l-0">
 	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
 		<!-- Logo / Name -->
 		<a href={$locale === 'it' ? '/' : '/en'} class="group flex items-center gap-3 no-underline">
@@ -70,21 +81,12 @@
 			</a>
 
 			<!-- Language Switcher -->
-			{#if $locale === 'it'}
-				<a
-					href="/en"
-					class="font-mono text-sm font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-				>
-					EN
-				</a>
-			{:else}
-				<a
-					href="/"
-					class="font-mono text-sm font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-				>
-					IT
-				</a>
-			{/if}
+			<a
+				href={$locale === 'it' ? '/en' : '/'}
+				class="font-mono text-sm font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{$locale === 'it' ? 'EN' : 'IT'}
+			</a>
 
 			<!-- Theme Toggle -->
 			<ThemeToggle />
@@ -144,37 +146,59 @@
 				</a>
 
 				<div class="flex justify-center gap-4 border-t border-[var(--color-fg)] pt-4">
-					{#if $locale === 'it'}
-						<a
-							href="/en"
-							class="font-mono text-lg font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-						>
-							Switch to EN
-						</a>
-					{:else}
-						<a
-							href="/"
-							class="font-mono text-lg font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-						>
-							Passa a IT
-						</a>
-					{/if}
+					<a
+						href={$locale === 'it' ? '/en' : '/'}
+						class="font-mono text-lg font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
+					>
+						{$locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
+					</a>
 				</div>
 			</nav>
 		</div>
 	{/if}
 
-	<!-- Ticker / Time bar -->
-	<div
-		class="flex items-center justify-between border-t border-t-[var(--border-thin)] bg-[var(--color-fg)] px-6 py-1 text-[var(--color-bg)]"
-	>
-		<span class="font-mono text-xs tracking-widest uppercase">Full Stack Developer</span>
-		<span class="font-mono text-xs tabular-nums">{currentTime}</span>
-	</div>
 </header>
+
+<!-- Ticker / Time bar -->
+<div
+	class="sticky top-0 z-50 flex items-center justify-between border-b-4 border-[var(--color-fg)] bg-[var(--color-fg)] px-6 py-1 text-[var(--color-bg)]"
+>
+	<div class="ticker-wrapper">
+		<div class={['ticker-inner', isSticky && 'ticker-active'].filter(Boolean).join(' ')}>
+			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+			<span class="ticker-item">EHYSTIV.DEV</span>
+			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+		</div>
+	</div>
+	<span class="font-mono text-xs tabular-nums">{currentTime}</span>
+</div>
 
 <style>
 	:global(.dark) .nav-logo {
 		filter: invert(1);
+	}
+
+	.ticker-wrapper {
+		overflow: hidden;
+		height: 1rem;
+	}
+
+	.ticker-active {
+		animation: ticker-flip 10s ease-in-out infinite;
+	}
+
+	.ticker-item {
+		display: block;
+		font-family: var(--font-mono, monospace);
+		font-size: 0.75rem;
+		line-height: 1rem;
+		letter-spacing: 0.1em;
+		font-weight: 700;
+	}
+
+	@keyframes ticker-flip {
+		0%, 45% { transform: translateY(0); }
+		50%, 95% { transform: translateY(-33.333%); }
+		100%     { transform: translateY(-66.666%); }
 	}
 </style>
