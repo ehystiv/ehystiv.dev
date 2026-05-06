@@ -4,7 +4,7 @@
 
 	const currentYear = new Date().getFullYear();
 
-	$: t = translations[$locale as Locale];
+	const t = $derived(translations[$locale as Locale]);
 
 	const socials = [
 		{ name: 'GitHub', url: 'https://github.com/ehystiv', icon: 'gh' },

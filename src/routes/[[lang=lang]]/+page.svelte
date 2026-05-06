@@ -8,7 +8,7 @@
 	import { translations } from '$lib/translations';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
 	const skills = [
 		{ category: 'Backend', items: ['PHP', 'Laravel', 'NestJS', 'Node.js', 'Python'] },
@@ -17,7 +17,7 @@
 		{ category: 'Database', items: ['MySQL', 'PostgreSQL', 'Redis', 'MongoDB'] }
 	];
 
-	let visibleInterestsCount = 8;
+	let visibleInterestsCount = $state(8);
 
 	function showMoreInterests() {
 		visibleInterestsCount += 8;
@@ -81,7 +81,9 @@
 
 			<!-- Description -->
 			<p class="mb-10 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
-				{@html translations[$locale].hero.description}
+				{translations[$locale].hero.description_pre}
+				<span class="font-bold text-[var(--color-fg)]">Laravel</span>,
+				<span class="font-bold text-[var(--color-fg)]">Vue.js</span>{translations[$locale].hero.description_post}
 			</p>
 
 			<!-- CTAs -->
@@ -168,7 +170,7 @@
 		{#if visibleInterestsCount < data.interests.length}
 			<div class="mt-8 text-center">
 				<button
-					on:click={showMoreInterests}
+					onclick={showMoreInterests}
 					class="btn-brutal inline-block cursor-pointer bg-[var(--color-bg)] text-[var(--color-fg)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]"
 				>
 					{translations[$locale].inspirations.show_more}
@@ -178,7 +180,9 @@
 	</div>
 </section>
 
-<JokeMarquee joke={data.joke} />
+{#if data.joke}
+	<JokeMarquee joke={data.joke} />
+{/if}
 
 <!-- About Section -->
 <section id="about" class="scroll-mt-4">
@@ -192,8 +196,19 @@
 				<h2 class="mb-8 text-4xl font-bold md:text-5xl">{translations[$locale].about.title}</h2>
 
 				<div class="space-y-4 text-lg leading-relaxed text-[var(--color-muted)]">
-					<p>{@html translations[$locale].about.p1}</p>
-					<p>{@html translations[$locale].about.p2}</p>
+					<p>
+						{translations[$locale].about.p1_pre}
+						<strong class="text-[var(--color-fg)]">Full Stack Developer</strong>
+						{translations[$locale].about.p1_post}
+					</p>
+					<p>
+						{translations[$locale].about.p2_pre}
+						<strong class="text-[var(--color-fg)]">PHP/Laravel</strong>
+						{translations[$locale].about.p2_mid}
+						<strong class="text-[var(--color-fg)]">Vue.js</strong>
+						{translations[$locale].about.p2_and}
+						<strong class="text-[var(--color-fg)]">Svelte</strong>.
+					</p>
 					<p>{translations[$locale].about.p3}</p>
 				</div>
 
