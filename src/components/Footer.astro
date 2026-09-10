@@ -25,7 +25,9 @@ const socials = [
 				<h3 class="mb-4 font-mono text-xl font-bold">
 					EHYSTIV<span class="text-[var(--color-accent)]">.DEV</span>
 				</h3>
-				<p class="text-sm leading-relaxed text-[var(--color-muted)]">{t.footer.description}</p>
+				<p class="text-sm leading-relaxed text-[var(--color-muted)]">
+					{t.footer.description}
+				</p>
 			</div>
 
 			<!-- Quick Links -->
@@ -63,7 +65,9 @@ const socials = [
 
 			<!-- Social -->
 			<div>
-				<h4 class="mb-4 font-mono text-sm font-bold tracking-wider uppercase">{t.footer.social}</h4>
+				<h4 class="mb-4 font-mono text-sm font-bold tracking-wider uppercase">
+					{t.footer.social}
+				</h4>
 				<div class="flex gap-3">
 					{socials.map((social) => (
 						<a
@@ -88,15 +92,20 @@ const socials = [
 			<div class="animate-marquee flex items-center gap-8 pl-8">
 				{Array.from({ length: 4 }).map(() => (
 					<span class="font-mono text-xs font-bold tracking-wider uppercase">
-						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
+						© {currentYear} Stefano Bichicchi - FullStack Web Developer.{' '}
+						{t.footer.rights}
 					</span>
 				))}
 			</div>
 			<!-- Second copy for seamless loop -->
-			<div class="animate-marquee aria-hidden flex items-center gap-8 pl-8" aria-hidden="true">
+			<div
+				class="animate-marquee aria-hidden flex items-center gap-8 pl-8"
+				aria-hidden="true"
+			>
 				{Array.from({ length: 4 }).map(() => (
 					<span class="font-mono text-xs font-bold tracking-wider uppercase">
-						© {currentYear} Stefano Bichicchi - FullStack Web Developer. {t.footer.rights}
+						© {currentYear} Stefano Bichicchi - FullStack Web Developer.{' '}
+						{t.footer.rights}
 					</span>
 				))}
 			</div>

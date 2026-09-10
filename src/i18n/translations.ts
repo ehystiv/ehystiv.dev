@@ -31,7 +31,7 @@ export const translations = {
 			p2_mid: 'e frontend con',
 			p2_and: 'e',
 			p3: "Credo nel codice pulito, nelle architetture scalabili e nell'importanza di creare software che risolva problemi reali.",
-			cta_contact: 'Contattami →',
+			cta_contact: 'Contattami',
 			tech_stack: 'Tech Stack'
 		},
 		footer: {
@@ -78,7 +78,7 @@ export const translations = {
 			p2_mid: 'and frontend with',
 			p2_and: 'and',
 			p3: 'I believe in clean code, scalable architectures, and the importance of creating software that solves real problems.',
-			cta_contact: 'Contact me →',
+			cta_contact: 'Contact me',
 			tech_stack: 'Tech Stack'
 		},
 		footer: {
