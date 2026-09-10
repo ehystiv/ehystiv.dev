@@ -1,22 +1,10 @@
-# sv
+# ehystiv.dev
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+Personal website of Stefano Bichicchi, built with [Astro](https://astro.build), TypeScript and Tailwind CSS v4. Deployed on Vercel.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies with `npm install`, start a development server:
 
 ```sh
 npm run dev
@@ -27,12 +15,19 @@ npm run dev -- --open
 
 ## Building
 
-To create a production version of your app:
+To create a production version of the app:
 
 ```sh
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+The build output is generated for Vercel (`.vercel/output/`) via `@astrojs/vercel`, with ISR enabled. To preview the production behavior locally, use the [Vercel CLI](https://vercel.com/docs/cli): `vercel dev`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Environment variables
+
+Copy `.env.example` (or create `.env`) with:
+
+| Variable       | Required | Purpose                                    |
+| -------------- | -------- | ------------------------------------------ |
+| `API_TOKEN`    | Yes      | api-ninjas.com key for the joke of the day |
+| `GITHUB_TOKEN` | No       | raises GitHub API rate limit for stars     |

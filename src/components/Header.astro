@@ -1,0 +1,232 @@
+---
+import logo from '../assets/logo.png';
+import ThemeToggle from './ThemeToggle.astro';
+import { translations, type Locale } from '../i18n/translations';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = translations[locale];
+
+const homeHref = locale === 'it' ? '/' : '/en';
+const langSwitchHref = locale === 'it' ? '/en' : '/';
+---
+
+<header id="site-header" class="border-brutal-thin border-t-0 border-r-0 border-b-4 border-l-0">
+	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
+		<!-- Logo / Name -->
+		<a href={homeHref} class="group flex items-center gap-3 no-underline">
+			<img
+				src={logo.src}
+				alt="ehystiv.dev logo"
+				class="nav-logo h-24 w-auto object-contain transition-transform duration-200 group-hover:scale-110"
+			/>
+			<div class="hidden sm:block">
+				<span class="font-mono text-lg font-bold tracking-tight">EHYSTIV</span>
+				<span class="font-mono text-lg font-bold tracking-tight text-[var(--color-accent)]">
+					.DEV
+				</span>
+			</div>
+		</a>
+
+		<!-- Desktop Navigation -->
+		<nav class="hidden items-center gap-6 md:flex">
+			<a
+				href="#projects"
+				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.projects}
+			</a>
+			<a
+				href="#inspirations"
+				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.inspirations}
+			</a>
+			<a
+				href="#about"
+				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.about}
+			</a>
+			<a
+				href="https://github.com/ehystiv"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-brutal inline-block text-xs"
+			>
+				{t.nav.github}
+			</a>
+
+			<!-- Language Switcher -->
+			<a
+				href={langSwitchHref}
+				class="font-mono text-sm font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{locale === 'it' ? 'EN' : 'IT'}
+			</a>
+
+			<!-- Theme Toggle -->
+			<ThemeToggle />
+		</nav>
+
+		<!-- Mobile Menu Button -->
+		<div class="flex items-center gap-4 md:hidden">
+			<ThemeToggle />
+			<button
+				id="mobile-menu-button"
+				class="btn-brutal px-3 py-2 text-sm"
+				aria-label="Toggle menu"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+			>
+				MENU
+			</button>
+		</div>
+	</div>
+
+	<!-- Mobile Menu Overlay -->
+	<div
+		id="mobile-menu"
+		class="border-brutal-thin hidden border-t-[var(--border-thin)] bg-[var(--color-bg)] p-6 md:hidden"
+	>
+		<nav class="flex flex-col gap-6 text-center">
+			<a
+				href="#projects"
+				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.projects}
+			</a>
+			<a
+				href="#inspirations"
+				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.inspirations}
+			</a>
+			<a
+				href="#about"
+				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.about}
+			</a>
+			<a
+				href="https://github.com/ehystiv"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-brutal mx-auto inline-block"
+			>
+				{t.nav.github}
+			</a>
+
+			<div class="flex justify-center gap-4 border-t border-[var(--color-fg)] pt-4">
+				<a
+					href={langSwitchHref}
+					class="font-mono text-lg font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
+				>
+					{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
+				</a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<!-- Ticker / Time bar -->
+<div class="sticky top-0 z-50 flex items-center justify-between border-b-4 border-[var(--color-fg)] bg-[var(--color-fg)] px-6 py-1 text-[var(--color-bg)]">
+	<div class="ticker-wrapper">
+		<div id="header-ticker" class="ticker-inner">
+			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+			<span class="ticker-item">EHYSTIV.DEV</span>
+			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+		</div>
+	</div>
+	<span id="header-clock" data-locale={locale} class="font-mono text-xs tabular-nums"></span>
+</div>
+
+<style>
+	:global(.dark) .nav-logo {
+		filter: invert(1);
+	}
+
+	.ticker-wrapper {
+		overflow: hidden;
+		height: 1rem;
+	}
+
+	.ticker-active {
+		animation: ticker-flip 10s ease-in-out infinite;
+	}
+
+	.ticker-item {
+		display: block;
+		font-family: var(--font-mono, monospace);
+		font-size: 0.75rem;
+		line-height: 1rem;
+		letter-spacing: 0.1em;
+		font-weight: 700;
+	}
+
+	@keyframes ticker-flip {
+		0%,
+		45% {
+			transform: translateY(0);
+		}
+		50%,
+		95% {
+			transform: translateY(-33.333%);
+		}
+		100% {
+			transform: translateY(-66.666%);
+		}
+	}
+</style>
+
+<script>
+	// Sticky ticker: start flipping when the header scrolls out of view
+	const header = document.getElementById('site-header');
+	const ticker = document.getElementById('header-ticker');
+
+	if (header && ticker) {
+		const observer = new IntersectionObserver(([entry]) => {
+			ticker.classList.toggle('ticker-active', !entry.isIntersecting);
+		});
+		observer.observe(header);
+	}
+
+	// Clock
+	const clock = document.getElementById('header-clock');
+
+	if (clock) {
+		const timeLocale = clock.dataset.locale === 'en' ? 'en-US' : 'it-IT';
+		const updateTime = () => {
+			clock.textContent = new Date().toLocaleTimeString(timeLocale, {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit'
+			});
+		};
+		updateTime();
+		setInterval(updateTime, 1000);
+	}
+
+	// Mobile menu
+	const menuButton = document.getElementById('mobile-menu-button');
+	const mobileMenu = document.getElementById('mobile-menu');
+
+	if (menuButton && mobileMenu) {
+		const setMenuOpen = (open: boolean) => {
+			mobileMenu.classList.toggle('hidden', !open);
+			menuButton.textContent = open ? '✕' : 'MENU';
+			menuButton.setAttribute('aria-expanded', String(open));
+		};
+
+		menuButton.addEventListener('click', () => {
+			setMenuOpen(mobileMenu.classList.contains('hidden'));
+		});
+
+		mobileMenu.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setMenuOpen(false));
+		});
+	}
+</script>

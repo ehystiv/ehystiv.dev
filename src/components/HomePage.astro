@@ -1,0 +1,332 @@
+---
+import profilePic from '../assets/profile_pic.png';
+import InterestCard from '../components/InterestCard.astro';
+import JokeMarquee from '../components/JokeMarquee.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+import type { Interest } from '../data/interests';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { translations, type Locale } from '../i18n/translations';
+
+interface GitHubRepo {
+	name: string;
+	description: string | null;
+	html_url: string;
+	topics: string[];
+}
+
+const locale = (Astro.currentLocale ?? 'it') as Locale;
+const t = translations[locale];
+
+const apiKey = import.meta.env.API_TOKEN as string | undefined;
+
+// Fetch Joke
+const jokePromise = (async (): Promise<string | null> => {
+	if (!apiKey) {
+		console.error('API_TOKEN not found in environment variables');
+		return null;
+	}
+	try {
+		const response = await fetch('https://api.api-ninjas.com/v1/jokeoftheday', {
+			headers: { 'X-Api-Key': apiKey }
+		});
+		if (response.ok) {
+			const data = await response.json();
+			return data[0]?.joke ?? null;
+		}
+		console.error('Failed to fetch joke:', response.statusText);
+		return null;
+	} catch (error) {
+		console.error('Error fetching joke:', error);
+		return null;
+	}
+})();
+
+// Fetch GitHub Stars (Interests)
+const githubHeaders: Record<string, string> = {
+	'User-Agent': 'ehystiv.dev',
+	'X-GitHub-Api-Version': '2022-11-28'
+};
+const githubToken = import.meta.env.GITHUB_TOKEN as string | undefined;
+if (githubToken) {
+	githubHeaders['Authorization'] = `Bearer ${githubToken}`;
+}
+
+const interestsPromise = (async (): Promise<Interest[]> => {
+	try {
+		const response = await fetch(
+			'https://api.github.com/users/ehystiv/starred?sort=created&direction=desc&per_page=100',
+			{ headers: githubHeaders }
+		);
+
+		if (response.ok) {
+			const data: GitHubRepo[] = await response.json();
+			return data.map((repo) => ({
+				name: repo.name,
+				description: {
+					en: repo.description || '',
+					it: repo.description || ''
+				},
+				url: repo.html_url,
+				tags: (repo.topics || []).slice(0, 5)
+			}));
+		}
+		console.error('Failed to fetch GitHub stars:', response.statusText);
+		return [];
+	} catch (error) {
+		console.error('Error fetching GitHub stars:', error);
+		return [];
+	}
+})();
+
+const [joke, interests] = await Promise.all([jokePromise, interestsPromise]);
+
+const skills = [
+	{ category: 'Backend', items: ['PHP', 'Laravel', 'NestJS', 'Node.js', 'Python'] },
+	{ category: 'Frontend', items: ['Vue.js', 'Svelte', 'React', 'TypeScript', 'Tailwind'] },
+	{ category: 'DevOps', items: ['Docker', 'Terraform', 'CI/CD', 'Linux'] },
+	{ category: 'Database', items: ['MySQL', 'PostgreSQL', 'Redis', 'MongoDB'] }
+];
+
+const INITIAL_VISIBLE_INTERESTS = 8;
+---
+
+<BaseLayout locale={locale}>
+	<!-- Hero Section -->
+	<section class="relative overflow-hidden border-b-4 border-[var(--color-fg)]">
+		<!-- Background pattern -->
+		<div class="absolute inset-0 opacity-5">
+			<div
+				class="h-full w-full"
+				style="background-image: repeating-linear-gradient(
+					0deg,
+					transparent,
+					transparent 50px,
+					var(--color-fg) 50px,
+					var(--color-fg) 51px
+				),
+				repeating-linear-gradient(
+					90deg,
+					transparent,
+					transparent 50px,
+					var(--color-fg) 50px,
+					var(--color-fg) 51px
+				);"
+			></div>
+		</div>
+
+		<div class="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
+			<div class="max-w-4xl">
+				<!-- Greeting -->
+				<p class="mb-4 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+					{t.hero.greeting}
+				</p>
+
+				<!-- Name and Profile Pic -->
+				<div class="mb-6 flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-8">
+					<h1 class="text-5xl leading-none font-bold md:text-7xl lg:text-8xl">
+						STEFANO
+						<br />
+						<span class="text-[var(--color-accent)]">BICHICCHI</span>
+					</h1>
+					<div class="relative h-24 w-24 shrink-0 md:h-32 md:w-32 lg:h-40 lg:w-40">
+						<img
+							src={profilePic.src}
+							alt="Stefano Bichicchi"
+							class="shadow-brutal h-full w-full rounded-full border-[var(--border-thick)] border-[var(--color-fg)] object-cover"
+						/>
+					</div>
+				</div>
+
+				<!-- Role -->
+				<div class="mb-8 flex items-center gap-4">
+					<div class="h-1 w-16 bg-[var(--color-fg)]"></div>
+					<p class="font-mono text-lg font-bold tracking-wider uppercase md:text-xl">
+						{t.hero.role}
+					</p>
+				</div>
+
+				<!-- Description -->
+				<p class="mb-10 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl">
+					{t.hero.description_pre}
+					<span class="font-bold text-[var(--color-fg)]">Laravel</span>,
+					<span class="font-bold text-[var(--color-fg)]">Vue.js</span>
+					{t.hero.description_post}
+				</p>
+
+				<!-- CTAs -->
+				<div class="flex flex-wrap gap-4">
+					<a href="#projects" class="btn-brutal btn-brutal-filled">
+						{t.hero.cta_projects}
+					</a>
+					<a
+						href="https://github.com/ehystiv"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-brutal"
+					>
+						{t.hero.cta_github}
+					</a>
+				</div>
+			</div>
+
+			<!-- Decorative element -->
+			<div class="absolute -right-20 -bottom-20 hidden h-64 w-64 border-[var(--border-thick)] border-[var(--color-fg)] bg-[var(--color-accent)] opacity-20 lg:block"></div>
+		</div>
+	</section>
+
+	<!-- Projects Section -->
+	<section id="projects" class="scroll-mt-4 border-b-4 border-[var(--color-fg)]">
+		<div class="mx-auto max-w-7xl px-6 py-20">
+			<!-- Section header -->
+			<div class="mb-12 flex items-end justify-between">
+				<div>
+					<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+						{t.projects.pretitle}
+					</p>
+					<h2 class="text-4xl font-bold md:text-5xl">{t.projects.title}</h2>
+				</div>
+				<div class="ml-8 hidden h-1 flex-1 bg-[var(--color-fg)] md:block"></div>
+			</div>
+
+			<!-- Projects grid -->
+			<div class="grid gap-8 md:grid-cols-2">
+				{projects.map((project) => (
+					<ProjectCard project={project} locale={locale} />
+				))}
+			</div>
+
+			<!-- View more -->
+			<div class="mt-12 text-center">
+				<a
+					href="https://github.com/ehystiv?tab=repositories"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-brutal inline-block"
+				>
+					{t.projects.view_all}
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Inspirations Section -->
+	<section
+		id="inspirations"
+		class="scroll-mt-4 border-b-4 border-[var(--color-fg)] bg-[var(--color-bg)]"
+	>
+		<div class="mx-auto max-w-7xl px-6 py-20">
+			<div class="mb-12">
+				<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+					{t.inspirations.pretitle}
+				</p>
+				<h2 class="text-4xl font-bold md:text-5xl">{t.inspirations.title}</h2>
+				<p class="mt-4 max-w-2xl text-[var(--color-muted)]">{t.inspirations.description}</p>
+			</div>
+
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+				{interests.map((interest, index) => (
+					<InterestCard
+						interest={interest}
+						locale={locale}
+						hidden={index >= INITIAL_VISIBLE_INTERESTS}
+					/>
+				))}
+			</div>
+
+			<!-- Show more button -->
+			{interests.length > INITIAL_VISIBLE_INTERESTS && (
+				<div id="show-more-wrapper" class="mt-8 text-center">
+					<button
+						id="show-more-interests"
+						data-step={INITIAL_VISIBLE_INTERESTS}
+						class="btn-brutal inline-block cursor-pointer bg-[var(--color-bg)] text-[var(--color-fg)] hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]"
+					>
+						{t.inspirations.show_more}
+					</button>
+				</div>
+			)}
+		</div>
+	</section>
+
+	{joke && <JokeMarquee joke={joke} />}
+
+	<!-- About Section -->
+	<section id="about" class="scroll-mt-4">
+		<div class="mx-auto max-w-7xl px-6 py-20">
+			<div class="grid gap-12 lg:grid-cols-2">
+				<!-- About text -->
+				<div>
+					<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+						{t.about.pretitle}
+					</p>
+					<h2 class="mb-8 text-4xl font-bold md:text-5xl">{t.about.title}</h2>
+
+					<div class="space-y-4 text-lg leading-relaxed text-[var(--color-muted)]">
+						<p>
+							{t.about.p1_pre}
+							<strong class="text-[var(--color-fg)]">Full Stack Developer</strong>
+							{t.about.p1_post}
+						</p>
+						<p>
+							{t.about.p2_pre}
+							<strong class="text-[var(--color-fg)]">PHP/Laravel</strong>
+							{t.about.p2_mid}
+							<strong class="text-[var(--color-fg)]">Vue.js</strong>
+							{t.about.p2_and}
+							<strong class="text-[var(--color-fg)]">Svelte</strong>.
+						</p>
+						<p>{t.about.p3}</p>
+					</div>
+
+					<!-- Contact CTA -->
+					<div class="mt-8">
+						<a href="mailto:stefano@bichicchi.it" class="btn-brutal btn-brutal-filled">
+							{t.about.cta_contact}
+						</a>
+					</div>
+				</div>
+
+				<!-- Skills -->
+				<div class="border-brutal p-6">
+					<h3 class="mb-6 font-mono text-xl font-bold uppercase">{t.about.tech_stack}</h3>
+
+					<div class="space-y-6">
+						{skills.map((skillGroup) => (
+							<div>
+								<h4 class="mb-3 font-mono text-sm font-bold tracking-wider text-[var(--color-accent)] uppercase">
+									{skillGroup.category}
+								</h4>
+								<div class="flex flex-wrap gap-2">
+									{skillGroup.items.map((skill) => (
+										<span class="tag">{skill}</span>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<script>
+	// "Show more" for the interests grid: reveal the next batch on each click
+	const showMoreButton = document.getElementById('show-more-interests');
+
+	if (showMoreButton) {
+		const step = Number(showMoreButton.dataset.step ?? 8);
+
+		showMoreButton.addEventListener('click', () => {
+			const hiddenCards = document.querySelectorAll('[data-interest][hidden]');
+			hiddenCards.forEach((card, index) => {
+				if (index < step) card.removeAttribute('hidden');
+			});
+
+			if (document.querySelectorAll('[data-interest][hidden]').length === 0) {
+				document.getElementById('show-more-wrapper')?.remove();
+			}
+		});
+	}
+</script>

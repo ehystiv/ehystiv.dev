@@ -6,44 +6,57 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev          # start dev server
-npm run build        # production build
-npm run preview      # preview production build
-npm run check        # svelte-check TypeScript type checking
+npm run build        # production build (outputs .vercel/output/ for Vercel)
+npm run preview      # NOT supported by the Vercel adapter — use `vercel dev` instead
+npm run check        # astro check (TypeScript + .astro diagnostics)
 npm run lint         # prettier + eslint check
 npm run format       # auto-format with prettier
 ```
 
 ## Architecture
 
-**Stack:** SvelteKit (Svelte 5) + TypeScript + Tailwind CSS v4, deployed on Vercel.
+**Stack:** Astro (SSR, `output: 'server'`) + TypeScript + Tailwind CSS v4, deployed on Vercel via `@astrojs/vercel` with ISR (6-hour cache, `isr.expiration` in `astro.config.mjs`). No client-side framework: the page ships zero JS by default; the few interactions are vanilla TypeScript `<script>` blocks bundled by Astro.
 
 ### Routing & i18n
 
-The single page lives at `src/routes/[[lang=lang]]/` — an optional route segment validated by `src/params/lang.ts` (accepts `en` or `it`). Both `/` and `/it` and `/en` resolve to the same page. The active locale is set in `+layout.svelte` by reading `page.params.lang` and writing to the `locale` store.
+Native Astro i18n (`i18n` key in `astro.config.mjs`): `defaultLocale: 'it'`, locales `['it', 'en']`, `prefixDefaultLocale: false`. This requires one physical page per locale:
 
-All UI strings live in `src/lib/translations.ts` as a typed `translations` object keyed by locale. Components read the locale from `$lib/stores/lang.ts` and index into that object.
+- `src/pages/index.astro` → `/` (Italian)
+- `src/pages/en/index.astro` → `/en` (English)
 
-### Server-side data (`+page.server.ts`)
+Both are thin wrappers rendering the shared `src/components/HomePage.astro`, which reads the active locale from `Astro.currentLocale` and passes it down to the layout and components as a prop. `/it` 301-redirects to `/` via the `redirects` config.
 
-Runs with ISR (6-hour cache). Fetches in parallel:
+All UI strings live in `src/i18n/translations.ts` as a typed `translations` object keyed by locale. Components receive a `locale: Locale` prop and index into that object.
+
+### Server-side data
+
+Fetches run in the frontmatter of `HomePage.astro` (server-side, re-executed on each ISR regeneration), in parallel via `Promise.all`:
 
 - **Joke of the day** — `api.api-ninjas.com/v1/jokeoftheday`, requires `API_TOKEN` env var.
-- **GitHub starred repos** — public API, no auth needed; used to populate the Inspirations section.
+- **GitHub starred repos** — public API, optional `GITHUB_TOKEN` env var raises the rate limit; used to populate the Inspirations section.
 
-### Stores
+Env vars are read with `import.meta.env.*` (no `PUBLIC_` prefix = server-only).
 
-- `src/lib/stores/lang.ts` — `locale` writable store (`'it' | 'en'`), default `'it'`.
-- `src/lib/stores/theme.ts` — `theme` writable store (`'light' | 'dark' | 'system'`), persisted in `localStorage`. Subscribe side-effect applies/removes `dark` class on `<html>`.
+### Client-side interactivity (vanilla)
+
+- **Theme** — an `is:inline` script in the `<head>` of `BaseLayout.astro` reads `localStorage.theme` and sets `data-theme` (+ `.dark` class) on `<html>` before first paint (no FOUC). `ThemeToggle.astro` cycles light → dark → system on click; icons are shown/hidden via CSS rules on `html[data-theme='...']`.
+- **Header** (`Header.astro` `<script>`) — live clock (`setInterval`), mobile menu toggle, sticky ticker activation via `IntersectionObserver`.
+- **Show more interests** (`HomePage.astro` `<script>`) — all cards are rendered server-side; cards beyond the first 8 carry the `hidden` attribute and `data-interest`; the button reveals 8 more per click and removes itself at the end. Requires the `[hidden] { display: none !important }` reset in `global.css` (Tailwind's `block` would otherwise override it).
 
 ### Static data
 
-Project entries are hardcoded in `src/lib/data/projects.ts` as a typed `Project[]` array with bilingual `description` and `longDescription` fields.
+Project entries are hardcoded in `src/data/projects.ts` as a typed `Project[]` array with bilingual `description` and `longDescription` fields.
+
+### Analytics
+
+`<Analytics />` (`@vercel/analytics/astro`) and `<SpeedInsights />` (`@vercel/speed-insights/astro`) in `BaseLayout.astro`, rendered only when `!import.meta.env.DEV`.
 
 ### Environment variables
 
-| Variable    | Required | Purpose                         |
-| ----------- | -------- | ------------------------------- |
-| `API_TOKEN` | Yes      | api-ninjas.com key for the joke |
+| Variable       | Required | Purpose                                    |
+| -------------- | -------- | ------------------------------------------ |
+| `API_TOKEN`    | Yes      | api-ninjas.com key for the joke            |
+| `GITHUB_TOKEN` | No       | raises GitHub API rate limit for the stars |
 
 ## Visual style
 
@@ -62,7 +75,7 @@ The site uses a **brutalist** aesthetic. When adding or modifying UI, stay consi
 - **Body** → `Space Grotesk` (sans-serif).
 - UI labels, tags, buttons, and nav items are always `font-mono`, `uppercase`, `tracking-wider`.
 
-### CSS variables (defined in `src/routes/layout.css`)
+### CSS variables (defined in `src/styles/global.css`)
 
 | Variable             | Light     | Dark      |
 | -------------------- | --------- | --------- |
@@ -72,9 +85,9 @@ The site uses a **brutalist** aesthetic. When adding or modifying UI, stay consi
 | `--color-accent-alt` | `#00ff88` | (same)    |
 | `--color-muted`      | `#666666` | `#999999` |
 
-Dark mode is applied by adding the `.dark` class to `<html>` (managed by the theme store). Always use the CSS variables rather than hardcoded colors.
+Dark mode is applied by adding the `.dark` class to `<html>` (managed by the inline theme script + `ThemeToggle` script). An explicit `data-theme="light"` choice overrides the OS dark preference; with no JS, `prefers-color-scheme` is the fallback. Always use the CSS variables rather than hardcoded colors.
 
-### Reusable CSS classes (defined in `layout.css`)
+### Reusable CSS classes (defined in `src/styles/global.css`)
 
 - `.btn-brutal` / `.btn-brutal-filled` — primary button style with shadow and hover lift.
 - `.tag` / `.tag-filled` — small monospaced uppercase label.

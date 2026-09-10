@@ -24,9 +24,11 @@
 	--shadow-brutal-hover: 8px 8px 0px var(--color-fg);
 }
 
-/* Dark mode */
+/* Dark mode
+   - Explicit choice (data-theme="light") always wins over the OS preference.
+   - Without JS (no data-theme set) the OS preference is used as fallback. */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme='light']) {
 		--color-bg: #0a0a0a;
 		--color-fg: #ffffff;
 		--color-muted: #999999;
@@ -49,6 +51,10 @@
 /* Reset & Base */
 * {
 	box-sizing: border-box;
+}
+
+[hidden] {
+	display: none !important;
 }
 
 html {

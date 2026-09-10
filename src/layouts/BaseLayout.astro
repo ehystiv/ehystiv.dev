@@ -1,0 +1,75 @@
+---
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+import favicon from '../assets/favicon.svg';
+import profilePic from '../assets/profile_pic.png';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { translations, type Locale } from '../i18n/translations';
+import '../styles/global.css';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const ogTitle = 'Stefano Bichicchi | Full Stack Developer';
+const ogDescription = translations[locale].footer.description;
+const canonicalUrl = Astro.url.href;
+const ogImageUrl = new URL(profilePic.src, Astro.url.origin).href;
+const isDev = import.meta.env.DEV;
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href={favicon.src} />
+		<title>{ogTitle}</title>
+		<meta name="description" content={ogDescription} />
+		<meta name="author" content="Stefano Bichicchi" />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:title" content={ogTitle} />
+		<meta property="og:description" content={ogDescription} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={ogTitle} />
+		<meta name="twitter:description" content={ogDescription} />
+		<meta name="twitter:image" content={ogImageUrl} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+			rel="stylesheet"
+		/>
+		<script is:inline>
+			(function () {
+				const stored = localStorage.getItem('theme');
+				const theme =
+					stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				document.documentElement.dataset.theme = theme;
+				if (theme === 'dark' || (theme === 'system' && prefersDark)) {
+					document.documentElement.classList.add('dark');
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="flex min-h-screen flex-col">
+			<Header locale={locale} />
+
+			<main class="flex-1">
+				<slot />
+			</main>
+
+			<Footer locale={locale} />
+		</div>
+		{!isDev && <Analytics />}
+		{!isDev && <SpeedInsights />}
+	</body>
+</html>
