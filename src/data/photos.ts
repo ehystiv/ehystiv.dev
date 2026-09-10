@@ -7,6 +7,7 @@ export interface Photo {
 	};
 	location?: string;
 	date?: string;
+	shoot_on?: string;
 }
 
 export interface PhotoCategory {
@@ -50,31 +51,36 @@ export const photoCategories: PhotoCategory[] = [
 				src: 'people/ragazza_costume.webp',
 				alt: { it: "Ragazza in costume", en: "Girl in swimsuit" },
 				location: 'Premilcuore',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'people/pride.webp',
 				alt: { it: "Ragazzo al Pride", en: "Boy at the Pride" },
 				location: 'Bologna',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'people/ragazza_blu.webp',
 				alt: { it: "Ragazza con vestito blu", en: "Girl in blue dress" },
 				location: 'Castel dell\'Alpi',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'people/ragazza_montagne.webp',
 				alt: { it: "Ragazza tra le montagne", en: "Girl among the mountains" },
 				location: 'Rocca Calascio',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'people/ragazzo_montagne.webp',
 				alt: { it: "Ragazzo tra le montagne", en: "Boy among the mountains" },
 				location: 'Bresimo',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			}
 		]
 	},
@@ -86,37 +92,43 @@ export const photoCategories: PhotoCategory[] = [
 				src: 'nature/lago_castello_alpi.webp',
 				alt: { it: "Lago di Castel dell'Alpi al tramonto", en: "The Castel dell'Alpi Lake at sunset" },
 				location: 'Castel dell\'Alpi',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'nature/castel_alpi.webp',
 				alt: { it: "Castel dell'Alpi", en: "Castel dell'Alpi" },
 				location: 'Castel dell\'Alpi',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'nature/lago_castel_alpi_2.webp',
 				alt: { it: "Lago di Castel dell'Alpi", en: "The Castel dell'Alpi Lake" },
 				location: 'Castel dell\'Alpi',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'nature/grotta_urlante.webp',
 				alt: { it: "Cascate delle grotte urlanti", en: "The Howling Caves Waterfalls" },
 				location: 'Premilcuore',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'nature/grotta_urlante_2.webp',
 				alt: { it: "Cascata delle grotte urlante con edera", en: "The Howling Caves Waterfalls with ivy" },
 				location: 'Premilcuore',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: "nature/marmore.webp",
 				alt: { it: "Cascata delle Marmore", en: "The Marmore Waterfalls" },
 				location: 'Cascata delle Marmore',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			}
 		]
 	},
@@ -128,13 +140,15 @@ export const photoCategories: PhotoCategory[] = [
 				src: 'animals/frog.webp',
 				alt: { it: "Rana", en: "Frog" },
 				location: 'Cascata delle Marmore',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			},
 			{
 				src: 'animals/balestrucci.webp',
 				alt: { it: "Balestrucci", en: "Swallows" },
 				location: 'Bresimo',
-				date: '2026'
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			}
 		]
 	}

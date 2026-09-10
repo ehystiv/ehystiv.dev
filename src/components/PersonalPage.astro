@@ -21,7 +21,7 @@ const resolvePhoto = (photo: Photo) => {
 		console.warn(`[personal] Photo file not found in src/assets/photos/: ${photo.src}`);
 		return null;
 	}
-	const meta = [photo.location, photo.date].filter(Boolean).join(' · ');
+	const meta = [photo.shoot_on, photo.location, photo.date].filter(Boolean).join(' · ');
 	return { ...photo, image: file.default, meta };
 };
 
@@ -112,7 +112,9 @@ const hasPhotos = resolvedCategories.length > 0;
 				</div>
 			) : (
 				<div class="border-brutal border-dashed p-12 text-center">
-					<p class="font-mono text-xl font-bold uppercase">{t.personal.photos.empty_title}</p>
+					<p class="font-mono text-xl font-bold uppercase">
+						{t.personal.photos.empty_title}
+					</p>
 					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
 						{t.personal.photos.empty_text}
 					</p>
@@ -136,7 +138,9 @@ const hasPhotos = resolvedCategories.length > 0;
 				</div>
 
 				<div class="border-brutal border-dashed p-12 text-center">
-					<p class="font-mono text-xl font-bold uppercase">{t.personal.blog.empty_title}</p>
+					<p class="font-mono text-xl font-bold uppercase">
+						{t.personal.blog.empty_title}
+					</p>
 					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
 						{t.personal.blog.empty_text}
 					</p>
