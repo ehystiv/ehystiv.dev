@@ -11,7 +11,17 @@ const { locale } = Astro.props;
 const t = translations[locale];
 
 const homeHref = locale === 'it' ? '/' : '/en';
-const langSwitchHref = locale === 'it' ? '/en' : '/';
+const personalHref = locale === 'it' ? '/personal' : '/en/personal';
+
+// Language switcher: swap the locale prefix while staying on the current page
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+let langSwitchHref: string;
+if (locale === 'it') {
+	langSwitchHref = currentPath === '/' ? '/en' : `/en${currentPath}`;
+} else {
+	const unprefixed = currentPath.replace(/^\/en/, '');
+	langSwitchHref = unprefixed === '' ? '/' : unprefixed;
+}
 ---
 
 <header id="site-header" class="border-brutal-thin border-t-0 border-r-0 border-b-4 border-l-0">
@@ -34,22 +44,28 @@ const langSwitchHref = locale === 'it' ? '/en' : '/';
 		<!-- Desktop Navigation -->
 		<nav class="hidden items-center gap-6 md:flex">
 			<a
-				href="#projects"
+				href={`${homeHref}#projects`}
 				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.projects}
 			</a>
 			<a
-				href="#inspirations"
+				href={`${homeHref}#inspirations`}
 				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.inspirations}
 			</a>
 			<a
-				href="#about"
+				href={`${homeHref}#about`}
 				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.about}
+			</a>
+			<a
+				href={personalHref}
+				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.personal}
 			</a>
 			<a
 				href="https://github.com/ehystiv"
@@ -94,22 +110,28 @@ const langSwitchHref = locale === 'it' ? '/en' : '/';
 	>
 		<nav class="flex flex-col gap-6 text-center">
 			<a
-				href="#projects"
+				href={`${homeHref}#projects`}
 				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.projects}
 			</a>
 			<a
-				href="#inspirations"
+				href={`${homeHref}#inspirations`}
 				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.inspirations}
 			</a>
 			<a
-				href="#about"
+				href={`${homeHref}#about`}
 				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
 			>
 				{t.nav.about}
+			</a>
+			<a
+				href={personalHref}
+				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
+			>
+				{t.nav.personal}
 			</a>
 			<a
 				href="https://github.com/ehystiv"

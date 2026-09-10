@@ -23,8 +23,12 @@ Native Astro i18n (`i18n` key in `astro.config.mjs`): `defaultLocale: 'it'`, loc
 
 - `src/pages/index.astro` → `/` (Italian)
 - `src/pages/en/index.astro` → `/en` (English)
+- `src/pages/personal.astro` → `/personal` (Italian)
+- `src/pages/en/personal.astro` → `/en/personal` (English)
 
-Both are thin wrappers rendering the shared `src/components/HomePage.astro`, which reads the active locale from `Astro.currentLocale` and passes it down to the layout and components as a prop. `/it` 301-redirects to `/` via the `redirects` config.
+All pages are thin wrappers rendering a shared component (`src/components/HomePage.astro`, `src/components/PersonalPage.astro`), which reads the active locale from `Astro.currentLocale` and passes it down to the layout and components as a prop. `/it` 301-redirects to `/` via the `redirects` config.
+
+In `Header.astro`, in-page anchors are home-relative (`${homeHref}#projects`) so they also work from secondary pages, and the language switcher derives the counterpart URL from `Astro.url.pathname` (stays on the current page when switching language).
 
 All UI strings live in `src/i18n/translations.ts` as a typed `translations` object keyed by locale. Components receive a `locale: Locale` prop and index into that object.
 
@@ -47,16 +51,24 @@ Env vars are read with `import.meta.env.*` (no `PUBLIC_` prefix = server-only).
 
 Project entries are hardcoded in `src/data/projects.ts` as a typed `Project[]` array with bilingual `description` and `longDescription` fields.
 
+### Personal page
+
+`/personal` (`PersonalPage.astro`) hosts the photo portfolio and the future blog:
+
+- **Photos** — grouped by category: `photoCategories` in `src/data/photos.ts` (`PhotoCategory[]`, empty by default), image files in `src/assets/photos/{categoryId}/`, resolved via a recursive `import.meta.glob`. Each category renders as its own subsection (anchor `#photos-{id}`); empty categories are skipped, and with no entries at all an empty-state card is shown. Clicking a photo opens a native `<dialog>` lightbox (vanilla script in the component).
+- **Blog** — the section renders only when `PUBLIC_BLOG_ENABLED=true` is set (public env var, inlined at build time). Until then it is completely absent from the markup.
+
 ### Analytics
 
 `<Analytics />` (`@vercel/analytics/astro`) and `<SpeedInsights />` (`@vercel/speed-insights/astro`) in `BaseLayout.astro`, rendered only when `!import.meta.env.DEV`.
 
 ### Environment variables
 
-| Variable       | Required | Purpose                                    |
-| -------------- | -------- | ------------------------------------------ |
-| `API_TOKEN`    | Yes      | api-ninjas.com key for the joke            |
-| `GITHUB_TOKEN` | No       | raises GitHub API rate limit for the stars |
+| Variable              | Required | Purpose                                             |
+| --------------------- | -------- | --------------------------------------------------- |
+| `API_TOKEN`           | Yes      | api-ninjas.com key for the joke                     |
+| `GITHUB_TOKEN`        | No       | raises GitHub API rate limit for the stars          |
+| `PUBLIC_BLOG_ENABLED` | No       | set to `true` to show the blog section on /personal |
 
 ## Visual style
 

@@ -10,12 +10,14 @@ import '../styles/global.css';
 
 interface Props {
 	locale: Locale;
+	title?: string;
+	description?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, title, description } = Astro.props;
 
-const ogTitle = 'Stefano Bichicchi | Full Stack Developer';
-const ogDescription = translations[locale].footer.description;
+const ogTitle = title ?? 'Stefano Bichicchi | Full Stack Developer';
+const ogDescription = description ?? translations[locale].footer.description;
 const canonicalUrl = Astro.url.href;
 const ogImageUrl = new URL(profilePic.src, Astro.url.origin).href;
 const isDev = import.meta.env.DEV;

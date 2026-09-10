@@ -1,0 +1,208 @@
+---
+import type { ImageMetadata } from 'astro';
+import { photoCategories, type Photo } from '../data/photos';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { translations, type Locale } from '../i18n/translations';
+
+const locale = (Astro.currentLocale ?? 'it') as Locale;
+const t = translations[locale];
+
+const blogEnabled = import.meta.env.PUBLIC_BLOG_ENABLED === 'true';
+
+// Resolve entries from src/data/photos.ts against the files in src/assets/photos/{category}/
+const photoFiles = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/photos/**/*.{jpg,jpeg,png,webp,avif}',
+	{ eager: true }
+);
+
+const resolvePhoto = (photo: Photo) => {
+	const file = photoFiles[`../assets/photos/${photo.src}`];
+	if (!file) {
+		console.warn(`[personal] Photo file not found in src/assets/photos/: ${photo.src}`);
+		return null;
+	}
+	const meta = [photo.location, photo.date].filter(Boolean).join(' · ');
+	return { ...photo, image: file.default, meta };
+};
+
+const resolvedCategories = photoCategories
+	.map((category) => ({
+		...category,
+		photos: category.photos
+			.map(resolvePhoto)
+			.filter((photo): photo is NonNullable<typeof photo> => photo !== null)
+	}))
+	.filter((category) => category.photos.length > 0);
+
+const hasPhotos = resolvedCategories.length > 0;
+---
+
+<BaseLayout locale={locale} title={t.personal.meta_title} description={t.personal.meta_description}>
+	<!-- Page header -->
+	<section class="border-b-4 border-[var(--color-fg)]">
+		<div class="mx-auto max-w-7xl px-6 py-20">
+			<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+				{t.personal.pretitle}
+			</p>
+			<h1 class="text-4xl font-bold md:text-6xl">{t.personal.title}</h1>
+			<p class="mt-4 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)]">
+				{t.personal.description}
+			</p>
+		</div>
+	</section>
+
+	<!-- Photo portfolio -->
+	<section id="photos" class="scroll-mt-4 border-b-4 border-[var(--color-fg)]">
+		<div class="mx-auto max-w-7xl px-6 py-20">
+			<div class="mb-12 flex items-end justify-between">
+				<div>
+					<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+						{t.personal.photos.pretitle}
+					</p>
+					<h2 class="text-4xl font-bold md:text-5xl">{t.personal.photos.title}</h2>
+				</div>
+				<div class="ml-8 hidden h-1 flex-1 bg-[var(--color-fg)] md:block"></div>
+			</div>
+
+			{hasPhotos ? (
+				<div class="space-y-12">
+					{resolvedCategories.map((category) => (
+						<div id={`photos-${category.id}`} class="scroll-mt-4">
+							<!-- Category header -->
+							<div class="mb-6 flex items-center gap-4">
+								<h3 class="font-mono text-lg font-bold tracking-wider text-[var(--color-accent)] uppercase">
+									{category.label[locale]}
+								</h3>
+								<span class="tag text-[10px]">{category.photos.length}</span>
+								<div class="h-0.5 flex-1 bg-[var(--color-fg)]"></div>
+							</div>
+
+							<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+								{category.photos.map((photo) => (
+									<button
+										type="button"
+										data-photo
+										data-full={photo.image.src}
+										data-caption={photo.alt[locale]}
+										data-meta={photo.meta}
+										class="group border-brutal hover-brutal block cursor-pointer bg-[var(--color-bg)] p-0 text-left"
+										aria-label={photo.alt[locale]}
+									>
+										<img
+											src={photo.image.src}
+											alt={photo.alt[locale]}
+											loading="lazy"
+											class="aspect-square w-full object-cover"
+										/>
+										{photo.meta && (
+											<div class="flex items-center justify-between border-t-4 border-[var(--color-fg)] bg-[var(--color-fg)] px-3 py-1 text-[var(--color-bg)]">
+												<span class="font-mono text-xs font-bold tracking-wider uppercase">
+													{photo.meta}
+												</span>
+												<span class="font-mono text-xs opacity-0 transition-opacity group-hover:opacity-100">
+													↗
+												</span>
+											</div>
+										)}
+									</button>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+			) : (
+				<div class="border-brutal border-dashed p-12 text-center">
+					<p class="font-mono text-xl font-bold uppercase">{t.personal.photos.empty_title}</p>
+					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
+						{t.personal.photos.empty_text}
+					</p>
+				</div>
+			)}
+		</div>
+	</section>
+
+	<!-- Blog (hidden until PUBLIC_BLOG_ENABLED=true) -->
+	{blogEnabled && (
+		<section id="blog" class="scroll-mt-4 border-b-4 border-[var(--color-fg)]">
+			<div class="mx-auto max-w-7xl px-6 py-20">
+				<div class="mb-12 flex items-end justify-between">
+					<div>
+						<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
+							{t.personal.blog.pretitle}
+						</p>
+						<h2 class="text-4xl font-bold md:text-5xl">{t.personal.blog.title}</h2>
+					</div>
+					<div class="ml-8 hidden h-1 flex-1 bg-[var(--color-fg)] md:block" />
+				</div>
+
+				<div class="border-brutal border-dashed p-12 text-center">
+					<p class="font-mono text-xl font-bold uppercase">{t.personal.blog.empty_title}</p>
+					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
+						{t.personal.blog.empty_text}
+					</p>
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- Photo lightbox -->
+	{hasPhotos && (
+		<dialog
+			id="photo-lightbox"
+			class="shadow-brutal fixed inset-0 m-auto max-h-[90vh] w-full max-w-4xl border-4 border-[var(--color-fg)] bg-[var(--color-bg)] p-0 backdrop:bg-black/70"
+		>
+			<figure class="m-0">
+				<img
+					id="lightbox-img"
+					src=""
+					alt=""
+					class="max-h-[75vh] w-full border-b-4 border-[var(--color-fg)] object-contain"
+				/>
+				<figcaption class="flex items-center justify-between gap-4 px-4 py-3">
+					<span id="lightbox-caption" class="font-mono text-sm font-bold uppercase" />
+					<span id="lightbox-meta" class="font-mono text-xs text-[var(--color-muted)]" />
+				</figcaption>
+			</figure>
+			<button
+				id="lightbox-close"
+				type="button"
+				class="btn-brutal btn-brutal-filled absolute top-3 right-3 px-3 py-1 text-sm"
+				aria-label="Close"
+			>
+				✕
+			</button>
+		</dialog>
+	)}
+</BaseLayout>
+
+<script>
+	// Photo lightbox: fill the shared <dialog> from the clicked card and open it modally
+	const dialog = document.getElementById('photo-lightbox') as HTMLDialogElement | null;
+
+	if (dialog) {
+		const image = dialog.querySelector<HTMLImageElement>('#lightbox-img');
+		const caption = dialog.querySelector<HTMLElement>('#lightbox-caption');
+		const meta = dialog.querySelector<HTMLElement>('#lightbox-meta');
+		const closeButton = dialog.querySelector<HTMLButtonElement>('#lightbox-close');
+
+		document.querySelectorAll<HTMLButtonElement>('[data-photo]').forEach((button) => {
+			button.addEventListener('click', () => {
+				if (!image) return;
+				image.src = button.dataset.full ?? '';
+				image.alt = button.dataset.caption ?? '';
+				if (caption) caption.textContent = button.dataset.caption ?? '';
+				if (meta) {
+					meta.textContent = button.dataset.meta ?? '';
+					meta.classList.toggle('hidden', !button.dataset.meta);
+				}
+				dialog.showModal();
+			});
+		});
+
+		closeButton?.addEventListener('click', () => dialog.close());
+		// Click on the backdrop (the dialog element itself) closes the lightbox
+		dialog.addEventListener('click', (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+	}
+</script>

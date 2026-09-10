@@ -45,7 +45,31 @@ export const translations = {
 			projects: 'Progetti',
 			inspirations: 'Inspirations',
 			about: 'About',
+			personal: 'Personal',
 			github: 'GitHub →'
+		},
+		personal: {
+			pretitle: '// Fuori dal codice',
+			title: 'PERSONAL',
+			description:
+				'Quando non scrivo codice: fotografie, pensieri e tutto quello che non sta in un repository. Un angolo più personale del sito.',
+			meta_title: 'Personal | Stefano Bichicchi',
+			meta_description:
+				'Fotografie, pensieri e progetti personali di Stefano Bichicchi: il lato fuori dal codice di un Full Stack Developer.',
+			photos: {
+				pretitle: '// Portfolio foto',
+				title: 'SCATTI',
+				empty_title: 'Foto in arrivo',
+				empty_text:
+					'Sto selezionando gli scatti da pubblicare qui. Torna a trovarmi: questa sezione prenderà vita presto.'
+			},
+			blog: {
+				pretitle: '// Blog',
+				title: 'APPUNTI',
+				empty_title: 'Nessun articolo — per ora',
+				empty_text:
+					'Il blog non è ancora attivo. Quando partirà, qui troverai articoli su sviluppo, tecnologia e altro.'
+			}
 		}
 	},
 	en: {
@@ -92,7 +116,31 @@ export const translations = {
 			projects: 'Projects',
 			inspirations: 'Inspirations',
 			about: 'About',
+			personal: 'Personal',
 			github: 'GitHub →'
+		},
+		personal: {
+			pretitle: '// Beyond the code',
+			title: 'PERSONAL',
+			description:
+				"When I'm not writing code: photographs, thoughts, and everything that doesn't fit in a repository. A more personal corner of the site.",
+			meta_title: 'Personal | Stefano Bichicchi',
+			meta_description:
+				'Photographs, thoughts, and personal projects by Stefano Bichicchi: the beyond-the-code side of a Full Stack Developer.',
+			photos: {
+				pretitle: '// Photo portfolio',
+				title: 'SHOTS',
+				empty_title: 'Photos coming soon',
+				empty_text:
+					"I'm selecting the shots to publish here. Check back soon: this section will come to life shortly."
+			},
+			blog: {
+				pretitle: '// Blog',
+				title: 'NOTES',
+				empty_title: 'No articles — yet',
+				empty_text:
+					"The blog isn't live yet. Once it is, you'll find articles about development, technology, and more here."
+			}
 		}
 	}
 };
