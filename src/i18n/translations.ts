@@ -8,7 +8,8 @@ export const translations = {
 			description_pre: 'Costruisco applicazioni web robuste e scalabili. Specializzato in',
 			description_post: ', e architetture moderne.',
 			cta_projects: 'Vedi Progetti →',
-			cta_github: 'GitHub Profile'
+			cta_github: 'GitHub Profile',
+			citation: 'Ma gli amici mi chiamano Stiv!'
 		},
 		projects: {
 			pretitle: '// I miei lavori',
@@ -79,7 +80,8 @@ export const translations = {
 			description_pre: 'I build robust and scalable web applications. Specialized in',
 			description_post: ', and modern architectures.',
 			cta_projects: 'View Projects →',
-			cta_github: 'GitHub Profile'
+			cta_github: 'GitHub Profile',
+			citation: 'But my friends call me Steve!'
 		},
 		projects: {
 			pretitle: '// My works',
