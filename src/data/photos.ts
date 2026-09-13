@@ -129,6 +129,13 @@ export const photoCategories: PhotoCategory[] = [
 				location: 'Cascata delle Marmore',
 				date: '2026',
 				shoot_on: 'Sony α6400'
+			},
+			{
+				src: "nature/sun.webp",
+				alt: { it: "Sole nelle fronde", en: "Sun among the leaves" },
+				location: 'Madonna dei Fornelli',
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			}
 		]
 	},
