@@ -81,6 +81,13 @@ export const photoCategories: PhotoCategory[] = [
 				location: 'Bresimo',
 				date: '2026',
 				shoot_on: 'Sony α6400'
+			},
+			{
+				src: "people/lara.webp",
+				alt: { it: "Lara", en: "Lara" },
+				location: 'Madonna dei Fornelli',
+				date: '2026',
+				shoot_on: 'Sony α6400'
 			}
 		]
 	},
