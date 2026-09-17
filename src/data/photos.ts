@@ -48,9 +48,9 @@ export const photoCategories: PhotoCategory[] = [
 		label: { it: 'Persone', en: 'People' },
 		photos: [
 			{
-				src: 'people/ragazza_costume.webp',
-				alt: { it: "Ragazza in costume", en: "Girl in swimsuit" },
-				location: 'Premilcuore',
+				src: 'people/ragazza_montagne.webp',
+				alt: { it: "Ragazza tra le montagne", en: "Girl among the mountains" },
+				location: 'Rocca Calascio',
 				date: '2026',
 				shoot_on: 'Sony α6400'
 			},
@@ -62,6 +62,13 @@ export const photoCategories: PhotoCategory[] = [
 				shoot_on: 'Sony α6400'
 			},
 			{
+				src: 'people/ragazzo_montagne.webp',
+				alt: { it: "Ragazzo tra le montagne", en: "Boy among the mountains" },
+				location: 'Bresimo',
+				date: '2026',
+				shoot_on: 'Sony α6400'
+			},
+			{
 				src: 'people/ragazza_blu.webp',
 				alt: { it: "Ragazza con vestito blu", en: "Girl in blue dress" },
 				location: 'Castel dell\'Alpi',
@@ -69,16 +76,9 @@ export const photoCategories: PhotoCategory[] = [
 				shoot_on: 'Sony α6400'
 			},
 			{
-				src: 'people/ragazza_montagne.webp',
-				alt: { it: "Ragazza tra le montagne", en: "Girl among the mountains" },
-				location: 'Rocca Calascio',
-				date: '2026',
-				shoot_on: 'Sony α6400'
-			},
-			{
-				src: 'people/ragazzo_montagne.webp',
-				alt: { it: "Ragazzo tra le montagne", en: "Boy among the mountains" },
-				location: 'Bresimo',
+				src: 'people/ragazza_costume.webp',
+				alt: { it: "Ragazza in costume", en: "Girl in swimsuit" },
+				location: 'Premilcuore',
 				date: '2026',
 				shoot_on: 'Sony α6400'
 			},
@@ -95,6 +95,13 @@ export const photoCategories: PhotoCategory[] = [
 		id: 'nature',
 		label: { it: 'Natura', en: 'Nature' },
 		photos: [
+			{
+				src: "nature/marmore.webp",
+				alt: { it: "Cascata delle Marmore", en: "The Marmore Waterfalls" },
+				location: 'Cascata delle Marmore',
+				date: '2026',
+				shoot_on: 'Sony α6400'
+			},
 			{
 				src: 'nature/lago_castello_alpi.webp',
 				alt: { it: "Lago di Castel dell'Alpi al tramonto", en: "The Castel dell'Alpi Lake at sunset" },
@@ -127,13 +134,6 @@ export const photoCategories: PhotoCategory[] = [
 				src: 'nature/grotta_urlante_2.webp',
 				alt: { it: "Cascata delle grotte urlante con edera", en: "The Howling Caves Waterfalls with ivy" },
 				location: 'Premilcuore',
-				date: '2026',
-				shoot_on: 'Sony α6400'
-			},
-			{
-				src: "nature/marmore.webp",
-				alt: { it: "Cascata delle Marmore", en: "The Marmore Waterfalls" },
-				location: 'Cascata delle Marmore',
 				date: '2026',
 				shoot_on: 'Sony α6400'
 			},
