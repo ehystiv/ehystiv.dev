@@ -14,9 +14,35 @@ export interface Project {
 	githubUrl: string;
 	homepage?: string;
 	featured: boolean;
+	// Rendered as the large card above the grid, with live release/stars data
+	spotlight?: {
+		repo: string;
+		platforms: string[];
+	};
 }
 
 export const projects: Project[] = [
+	{
+		name: 'git-sea',
+		slug: 'git-sea',
+		description: {
+			it: 'Visualizzatore veloce e read-only della history Git',
+			en: 'Fast, read-only Git history viewer'
+		},
+		longDescription: {
+			it: "Un'app desktop per esplorare la history Git come un canvas di nodi: dove vanno i branch, come si uniscono e com'è fatto l'albero dei commit. Il layout del grafo gira in Rust con gitoxide e arriva alla UI a blocchi: su nodejs/node (~49k commit) le prime righe compaiono in ~300 ms. Diff con syntax highlighting, tab multiple, aggiornamento live e navigazione da tastiera.",
+			en: 'A desktop app to explore Git history as a node canvas: where branches go, how they merge and what the commit tree looks like. The graph layout runs in Rust with gitoxide and streams to the UI in chunks: on nodejs/node (~49k commits) the first rows appear in ~300 ms. Syntax-highlighted diffs, multiple tabs, live reload and keyboard-first navigation.'
+		},
+		language: 'Rust',
+		topics: ['Tauri', 'Rust', 'gitoxide', 'React', 'Desktop App'],
+		githubUrl: 'https://github.com/ehystiv/git-sea',
+		homepage: 'https://git-sea.ehystiv.dev/',
+		featured: true,
+		spotlight: {
+			repo: 'ehystiv/git-sea',
+			platforms: ['macOS', 'Linux', 'Windows']
+		}
+	},
 	{
 		name: 'ServRepoMaker',
 		slug: 'servrepomaker',
@@ -90,5 +116,6 @@ export const languageColors: Record<string, string> = {
 	Python: '#3776AB',
 	Vue: '#4FC08D',
 	JavaScript: '#F7DF1E',
-	Svelte: '#FF3E00'
+	Svelte: '#FF3E00',
+	Rust: '#DEA584'
 };

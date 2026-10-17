@@ -14,7 +14,11 @@ export const translations = {
 		projects: {
 			pretitle: '// I miei lavori',
 			title: 'PROGETTI',
-			view_all: 'Vedi tutti su GitHub →'
+			view_all: 'Vedi tutti su GitHub →',
+			spotlight_label: 'Ultimo rilascio',
+			spotlight_download: 'Scarica',
+			spotlight_website: 'Sito →',
+			spotlight_platforms: 'Disponibile per'
 		},
 		inspirations: {
 			pretitle: '// Cosa seguo',
@@ -86,7 +90,11 @@ export const translations = {
 		projects: {
 			pretitle: '// My works',
 			title: 'PROJECTS',
-			view_all: 'View all on GitHub →'
+			view_all: 'View all on GitHub →',
+			spotlight_label: 'Latest release',
+			spotlight_download: 'Download',
+			spotlight_website: 'Website →',
+			spotlight_platforms: 'Available for'
 		},
 		inspirations: {
 			pretitle: '// What I follow',
