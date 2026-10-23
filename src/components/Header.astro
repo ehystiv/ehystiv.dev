@@ -24,6 +24,9 @@ if (locale === 'it') {
 	langSwitchHref = unprefixed === '' ? '/' : unprefixed;
 }
 
+// The switch link points to the other language: announce it in that language
+const otherLang = locale === 'it' ? 'en' : 'it';
+
 const navLinks = [
 	{ href: `${homeHref}#projects`, label: t.nav.projects },
 	{ href: `${homeHref}#inspirations`, label: t.nav.inspirations },
@@ -37,14 +40,19 @@ const navLinks = [
 		<!-- Logo / Name -->
 		<a href={homeHref} class="group flex items-center gap-3 no-underline">
 			<Logo class="h-14 w-14 transition-transform duration-200 group-hover:scale-105" />
+			<span class="sr-only sm:hidden">EHYSTIV.DEV</span>
 			<div class="hidden flex-col leading-none sm:flex">
 				<span class="font-display text-lg font-black tracking-widest">
 					EHYSTIV<span class="neon-text flicker">.DEV</span>
 				</span>
-				<span class="mt-1 font-mono text-[10px] tracking-[0.3em] text-[var(--color-muted)] uppercase">
+				<span
+					class="mt-1 font-mono text-xs tracking-[0.3em] text-[var(--color-muted)] uppercase"
+					aria-hidden="true"
+				>
 					Night City // Netrunner
 				</span>
 			</div>
+			<span class="sr-only">{t.a11y.home}</span>
 		</a>
 
 		<!-- Desktop Navigation -->
@@ -63,12 +71,19 @@ const navLinks = [
 				rel="noopener noreferrer"
 				class="btn-cyber inline-block text-xs no-underline"
 			>
-				{t.nav.github}
+				{t.nav.github} <span aria-hidden="true">→</span>
+				<span class="sr-only">{t.a11y.new_tab}</span>
 			</a>
 
 			<!-- Language Switcher -->
-			<a href={langSwitchHref} class="nav-link glitch-hover font-mono text-sm font-bold uppercase">
-				{locale === 'it' ? 'EN' : 'IT'}
+			<a
+				href={langSwitchHref}
+				lang={otherLang}
+				hreflang={otherLang}
+				aria-label={t.a11y.switch_language}
+				class="nav-link glitch-hover font-mono text-sm font-bold uppercase"
+			>
+				{otherLang.toUpperCase()}
 			</a>
 
 			<!-- Theme Toggle -->
@@ -81,7 +96,7 @@ const navLinks = [
 			<button
 				id="mobile-menu-button"
 				class="btn-cyber px-3 py-2 text-sm"
-				aria-label="Toggle menu"
+				aria-label={t.a11y.open_menu}
 				aria-expanded="false"
 				aria-controls="mobile-menu"
 			>
@@ -96,7 +111,7 @@ const navLinks = [
 		class="mobile-menu fixed inset-0 z-[60] md:hidden"
 		role="dialog"
 		aria-modal="true"
-		aria-label="Menu"
+		aria-label={t.a11y.menu}
 		data-state="closed"
 		hidden
 	>
@@ -111,14 +126,17 @@ const navLinks = [
 
 			<!-- Top bar -->
 			<div class="relative flex items-center justify-between border-b border-[var(--color-border)] px-6 py-5">
-				<span class="menu-meta font-mono text-xs tracking-[0.3em] text-[var(--color-accent-alt)] uppercase">
+				<span
+					class="menu-meta font-mono text-xs tracking-[0.3em] text-[var(--color-accent-alt)] uppercase"
+					aria-hidden="true"
+				>
 					// NAV.SYS <span class="text-[var(--color-accent-hot)]">ACCESS GRANTED</span>
 				</span>
 				<button
 					id="mobile-menu-close"
 					type="button"
 					class="btn-cyber px-3 py-2 text-sm"
-					aria-label="Close menu"
+					aria-label={t.a11y.close_menu}
 				>
 					✕
 				</button>
@@ -130,7 +148,7 @@ const navLinks = [
 					{navLinks.map((link, i) => (
 						<li class="menu-item border-b border-[var(--color-border)]" style={`--i: ${i}`}>
 							<a href={link.href} class="group flex items-center gap-4 py-5 no-underline">
-								<span class="font-mono text-xs text-[var(--color-accent-hot)]">
+								<span class="font-mono text-xs text-[var(--color-accent-hot)]" aria-hidden="true">
 									{String(i + 1).padStart(2, '0')}
 								</span>
 								<span
@@ -139,7 +157,10 @@ const navLinks = [
 								>
 									{link.label}
 								</span>
-								<span class="ml-auto font-mono text-[var(--color-accent-alt)] opacity-60 transition-opacity group-hover:opacity-100">
+								<span
+									class="ml-auto font-mono text-[var(--color-accent-alt)] opacity-60 transition-opacity group-hover:opacity-100"
+									aria-hidden="true"
+								>
 									→
 								</span>
 							</a>
@@ -157,10 +178,13 @@ const navLinks = [
 						rel="noopener noreferrer"
 						class="btn-cyber btn-cyber-filled no-underline"
 					>
-						{t.nav.github}
+						{t.nav.github} <span aria-hidden="true">→</span>
+						<span class="sr-only">{t.a11y.new_tab}</span>
 					</a>
 					<a
 						href={langSwitchHref}
+						lang={otherLang}
+						hreflang={otherLang}
 						class="nav-link glitch-hover font-mono text-sm font-bold tracking-wider uppercase"
 					>
 						{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
@@ -169,7 +193,10 @@ const navLinks = [
 			</nav>
 
 			<!-- HUD footer -->
-			<div class="menu-meta relative flex justify-between border-t border-[var(--color-border)] px-6 py-3 font-mono text-[10px] tracking-widest text-[var(--color-muted)] uppercase">
+			<div
+				class="menu-meta relative flex justify-between border-t border-[var(--color-border)] px-6 py-3 font-mono text-xs tracking-widest text-[var(--color-muted)] uppercase"
+				aria-hidden="true"
+			>
 				<span>EHYSTIV.DEV // v2.077</span>
 				<span>
 					LINK <span class="text-[var(--color-accent)]">SECURE</span>
@@ -183,8 +210,12 @@ const navLinks = [
 </header>
 
 <!-- Ticker / Time bar -->
-<div class="ticker-bar sticky top-0 z-50 flex items-center justify-between bg-[var(--color-bar-bg)] px-6 py-1 text-[var(--color-bar-fg)]">
-	<div class="flex items-center gap-3">
+<div
+	class="ticker-bar sticky top-0 z-50 flex items-center justify-between gap-4 bg-[var(--color-bar-bg)] px-6 py-1 text-[var(--color-bar-fg)]"
+	role="region"
+	aria-label={t.a11y.status_bar}
+>
+	<div class="flex items-center gap-3" aria-hidden="true">
 		<span class="status-dot" aria-hidden="true"></span>
 		<div class="ticker-wrapper">
 			<div id="header-ticker" class="ticker-inner">
@@ -194,10 +225,35 @@ const navLinks = [
 			</div>
 		</div>
 	</div>
-	<span class="flex items-center gap-2 font-mono text-xs font-bold tabular-nums">
-		<span class="hidden opacity-70 sm:inline">NC.TIME</span>
-		<span id="header-clock" data-locale={locale}></span>
-	</span>
+	<div class="flex items-center gap-4">
+		<span
+			class="flex items-center gap-2 font-mono text-xs font-bold tabular-nums"
+			aria-hidden="true"
+		>
+			<span class="hidden opacity-70 sm:inline">NC.TIME</span>
+			<span id="header-clock" data-locale={locale}></span>
+		</span>
+		<!-- Pause/resume every animation on the site (WCAG 2.2.2), remembered in localStorage -->
+		<button
+			id="motion-toggle"
+			type="button"
+			class="motion-toggle flex items-center gap-1.5 border border-current px-2 py-0.5 font-mono text-xs font-bold uppercase"
+			aria-pressed="false"
+			title={t.a11y.pause_animations}
+			data-label-pause={t.a11y.pause_animations}
+			data-label-play={t.a11y.play_animations}
+		>
+			<svg class="icon-pause h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+				<rect x="2" y="1" width="3" height="10"></rect>
+				<rect x="7" y="1" width="3" height="10"></rect>
+			</svg>
+			<svg class="icon-play h-3 w-3" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+				<path d="M2 1L11 6L2 11Z"></path>
+			</svg>
+			<span aria-hidden="true">FX</span>
+			<span class="sr-only">{t.a11y.pause_animations}</span>
+		</button>
+	</div>
 </div>
 
 <style>
@@ -265,6 +321,20 @@ const navLinks = [
 			transform: translateY(-66.666%);
 		}
 	}
+	.motion-toggle:focus-visible {
+		outline-color: var(--color-bar-fg);
+		outline-offset: 2px;
+	}
+
+	.motion-toggle .icon-play,
+	:global(html[data-motion='paused']) .motion-toggle .icon-pause {
+		display: none;
+	}
+
+	:global(html[data-motion='paused']) .motion-toggle .icon-play {
+		display: block;
+	}
+
 	/* ---------- Mobile menu ---------- */
 	.mobile-menu .menu-panel {
 		position: relative;
@@ -408,7 +478,32 @@ const navLinks = [
 </style>
 
 <script>
-	import { scramble } from '../scripts/glitch-text';
+	import { motionDisabled, scramble } from '../scripts/glitch-text';
+
+	// Pause / resume animations: aria-pressed reflects the paused state
+	const motionToggle = document.getElementById('motion-toggle');
+
+	if (motionToggle) {
+		const root = document.documentElement;
+		const sync = () => {
+			const paused = root.dataset.motion === 'paused';
+			motionToggle.setAttribute('aria-pressed', String(paused));
+			motionToggle.title =
+				(paused ? motionToggle.dataset.labelPlay : motionToggle.dataset.labelPause) ?? '';
+		};
+		motionToggle.addEventListener('click', () => {
+			const paused = root.dataset.motion !== 'paused';
+			if (paused) root.dataset.motion = 'paused';
+			else delete root.dataset.motion;
+			try {
+				localStorage.setItem('motion', paused ? 'paused' : 'on');
+			} catch {
+				// storage unavailable: the choice lasts for this page only
+			}
+			sync();
+		});
+		sync();
+	}
 
 	// Sticky ticker: start flipping when the header scrolls out of view
 	const header = document.getElementById('site-header');
@@ -443,10 +538,29 @@ const navLinks = [
 	const closeButton = document.getElementById('mobile-menu-close');
 
 	if (menuButton && mobileMenu) {
-		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 		const ITEM_DELAY = 450;
 		const ITEM_STAGGER = 90;
 		let closeTimer: number | undefined;
+		let inerted: Element[] = [];
+
+		// Everything outside the open menu becomes inert, so Tab and screen readers stay inside it
+		const setOutsideInert = (on: boolean) => {
+			if (!on) {
+				inerted.forEach((el) => el.removeAttribute('inert'));
+				inerted = [];
+				return;
+			}
+			let node: Element = mobileMenu;
+			while (node.parentElement && node !== document.body) {
+				for (const sibling of node.parentElement.children) {
+					if (sibling === node || sibling.hasAttribute('inert') || sibling.tagName === 'SCRIPT')
+						continue;
+					sibling.setAttribute('inert', '');
+					inerted.push(sibling);
+				}
+				node = node.parentElement;
+			}
+		};
 
 		const openMenu = () => {
 			window.clearTimeout(closeTimer);
@@ -454,12 +568,12 @@ const navLinks = [
 			mobileMenu.dataset.state = 'open';
 			menuButton.setAttribute('aria-expanded', 'true');
 			document.documentElement.style.overflow = 'hidden';
+			setOutsideInert(true);
 			closeButton?.focus({ preventScroll: true });
 
-			if (reducedMotion.matches) return;
+			if (motionDisabled()) return;
 			// Decrypt each label as its row glitches in
 			mobileMenu.querySelectorAll<HTMLElement>('[data-menu-scramble]').forEach((label, i) => {
-				label.textContent = label.dataset.scrambleText ?? label.textContent;
 				window.setTimeout(() => scramble(label, 450), ITEM_DELAY + i * ITEM_STAGGER);
 			});
 		};
@@ -468,11 +582,12 @@ const navLinks = [
 			if (mobileMenu.dataset.state !== 'open') return;
 			menuButton.setAttribute('aria-expanded', 'false');
 			document.documentElement.style.overflow = '';
+			setOutsideInert(false);
 			const finish = () => {
 				mobileMenu.hidden = true;
 				mobileMenu.dataset.state = 'closed';
 			};
-			if (reducedMotion.matches) {
+			if (motionDisabled()) {
 				finish();
 			} else {
 				mobileMenu.dataset.state = 'closing';

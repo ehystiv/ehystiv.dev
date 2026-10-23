@@ -42,7 +42,7 @@ const hasPhotos = resolvedCategories.length > 0;
 	<section class="relative overflow-hidden border-b border-[var(--color-border)]">
 		<div class="page-grid absolute inset-0" aria-hidden="true"></div>
 		<div class="relative mx-auto max-w-7xl px-6 py-20">
-			<p class="hud-label mb-2" data-scramble>
+			<p class="hud-label hud-prefix mb-2" data-scramble>
 				{t.personal.pretitle}
 			</p>
 			<h1 class="text-4xl font-black md:text-6xl">
@@ -61,7 +61,7 @@ const hasPhotos = resolvedCategories.length > 0;
 		<div class="mx-auto max-w-7xl px-6 py-20">
 			<div class="mb-12 flex items-end justify-between">
 				<div>
-					<p class="hud-label mb-2" data-scramble>
+					<p class="hud-label hud-prefix mb-2" data-scramble>
 						{t.personal.photos.pretitle}
 					</p>
 					<h2 class="text-4xl font-black md:text-5xl" data-scramble>
@@ -80,7 +80,7 @@ const hasPhotos = resolvedCategories.length > 0;
 								<h3 class="neon-text font-mono text-lg font-bold tracking-wider uppercase">
 									{category.label[locale]}
 								</h3>
-								<span class="tag text-[10px]">{category.photos.length}</span>
+								<span class="tag">{category.photos.length}</span>
 								<div class="neon-rule flex-1"></div>
 							</div>
 
@@ -106,7 +106,10 @@ const hasPhotos = resolvedCategories.length > 0;
 												<span class="font-mono text-xs font-bold tracking-wider uppercase">
 													{photo.meta}
 												</span>
-												<span class="font-mono text-xs opacity-0 transition-opacity group-hover:opacity-100">
+												<span
+													class="font-mono text-xs opacity-0 transition-opacity group-hover:opacity-100"
+													aria-hidden="true"
+												>
 													↗
 												</span>
 											</div>
@@ -134,7 +137,7 @@ const hasPhotos = resolvedCategories.length > 0;
 			<div class="mx-auto max-w-7xl px-6 py-20">
 				<div class="mb-12 flex items-end justify-between">
 					<div>
-						<p class="hud-label mb-2" data-scramble>
+						<p class="hud-label hud-prefix mb-2" data-scramble>
 							{t.personal.blog.pretitle}
 						</p>
 						<h2 class="text-4xl font-black md:text-5xl" data-scramble>
@@ -158,6 +161,7 @@ const hasPhotos = resolvedCategories.length > 0;
 	{hasPhotos && (
 		<dialog
 			id="photo-lightbox"
+			aria-labelledby="lightbox-caption"
 			class="lightbox fixed inset-0 m-auto max-h-[90vh] w-full max-w-4xl border border-[var(--color-accent-alt)] bg-[var(--color-surface)] p-0 text-[var(--color-fg)] backdrop:bg-black/80 backdrop:backdrop-blur-sm"
 		>
 			<figure class="m-0">
@@ -176,7 +180,7 @@ const hasPhotos = resolvedCategories.length > 0;
 				id="lightbox-close"
 				type="button"
 				class="btn-cyber btn-cyber-filled absolute top-3 right-3 px-3 py-1 text-sm"
-				aria-label="Close"
+				aria-label={t.a11y.close}
 			>
 				✕
 			</button>

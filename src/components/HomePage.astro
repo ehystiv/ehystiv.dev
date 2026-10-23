@@ -151,8 +151,13 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 			<div class="max-w-4xl">
 				<!-- Greeting -->
 				<p class="hud-label mb-6 flex items-center gap-3">
-					<span class="inline-block h-2 w-2 bg-[var(--color-accent-hot)] shadow-[0_0_8px_var(--color-accent-hot)]"></span>
-					<span data-scramble>{t.hero.greeting}</span>
+					<span
+						class="inline-block h-2 w-2 bg-[var(--color-accent-hot)] shadow-[0_0_8px_var(--color-accent-hot)]"
+						aria-hidden="true"
+					></span>
+					<span class="hud-prefix" data-scramble>
+						{t.hero.greeting}
+					</span>
 				</p>
 
 				<!-- Name and Profile Pic -->
@@ -178,7 +183,8 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 				</div>
 
 				<div class="mb-8 ml-1 font-mono text-sm text-[var(--color-accent-hot)]">
-					&gt; "{t.hero.citation}"<span class="cursor-blink"></span>
+					<span aria-hidden="true">&gt;</span> "{t.hero.citation}"
+					<span class="cursor-blink" aria-hidden="true"></span>
 				</div>
 
 				<!-- Role -->
@@ -200,7 +206,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 				<!-- CTAs -->
 				<div class="flex flex-wrap gap-4">
 					<a href="#projects" class="btn-cyber btn-cyber-filled no-underline">
-						{t.hero.cta_projects}
+						{t.hero.cta_projects} <span aria-hidden="true">→</span>
 					</a>
 					<a
 						href="https://github.com/ehystiv"
@@ -209,6 +215,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 						class="btn-cyber no-underline"
 					>
 						{t.hero.cta_github}
+						<span class="sr-only">{t.a11y.new_tab}</span>
 					</a>
 				</div>
 			</div>
@@ -216,7 +223,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 
 		<!-- HUD readout -->
 		<div
-			class="absolute right-6 bottom-4 hidden font-mono text-[10px] leading-relaxed tracking-widest text-[var(--color-muted)] uppercase md:block"
+			class="absolute right-6 bottom-4 hidden font-mono text-xs leading-relaxed tracking-widest text-[var(--color-muted)] uppercase md:block"
 			aria-hidden="true"
 		>
 			<div>
@@ -235,7 +242,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 			<!-- Section header -->
 			<div class="mb-12 flex items-end justify-between">
 				<div>
-					<p class="hud-label mb-2" data-scramble>
+					<p class="hud-label hud-prefix mb-2" data-scramble>
 						{t.projects.pretitle}
 					</p>
 					<h2 class="text-4xl font-black md:text-5xl" data-scramble>
@@ -269,7 +276,8 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 					rel="noopener noreferrer"
 					class="btn-cyber inline-block no-underline"
 				>
-					{t.projects.view_all}
+					{t.projects.view_all} <span aria-hidden="true">→</span>
+					<span class="sr-only">{t.a11y.new_tab}</span>
 				</a>
 			</div>
 		</div>
@@ -279,7 +287,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 	<section id="inspirations" class="scroll-mt-4 border-b border-[var(--color-border)]">
 		<div class="mx-auto max-w-7xl px-6 py-20">
 			<div class="mb-12">
-				<p class="hud-label mb-2" data-scramble>
+				<p class="hud-label hud-prefix mb-2" data-scramble>
 					{t.inspirations.pretitle}
 				</p>
 				<h2 class="text-4xl font-black md:text-5xl" data-scramble>
@@ -309,7 +317,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 		</div>
 	</section>
 
-	{joke && <JokeMarquee joke={joke} />}
+	{joke && <JokeMarquee joke={joke} locale={locale} />}
 
 	<!-- About Section -->
 	<section id="about" class="scroll-mt-4">
@@ -317,7 +325,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 			<div class="grid gap-12 lg:grid-cols-2">
 				<!-- About text -->
 				<div>
-					<p class="hud-label mb-2" data-scramble>
+					<p class="hud-label hud-prefix mb-2" data-scramble>
 						{t.about.pretitle}
 					</p>
 					<h2 class="mb-8 text-4xl font-black md:text-5xl" data-scramble>
@@ -353,7 +361,10 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 				<div class="cyber-panel p-6">
 					<div class="mb-6 flex items-center justify-between">
 						<h3 class="text-xl font-bold">{t.about.tech_stack}</h3>
-						<span class="font-mono text-[10px] tracking-widest text-[var(--color-muted)]">
+						<span
+							class="font-mono text-xs tracking-widest text-[var(--color-muted)]"
+							aria-hidden="true"
+						>
 							CYBERWARE.LOADOUT
 						</span>
 					</div>
@@ -362,7 +373,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 						{skills.map((skillGroup) => (
 							<div>
 								<h4 class="neon-text mb-3 font-mono text-sm font-bold tracking-wider uppercase">
-									&gt; {skillGroup.category}
+									<span aria-hidden="true">&gt;</span> {skillGroup.category}
 								</h4>
 								<div class="flex flex-wrap gap-2">
 									{skillGroup.items.map((skill) => (

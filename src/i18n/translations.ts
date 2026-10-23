@@ -3,32 +3,32 @@ export type Locale = 'it' | 'en';
 export const translations = {
 	it: {
 		hero: {
-			greeting: '// Ciao, sono',
+			greeting: 'Ciao, sono',
 			role: 'Full Stack Developer',
 			description_pre: 'Costruisco applicazioni web robuste e scalabili. Specializzato in',
 			description_post: ', e architetture moderne.',
-			cta_projects: 'Vedi Progetti →',
+			cta_projects: 'Vedi Progetti',
 			cta_github: 'GitHub Profile',
 			citation: 'Ma gli amici mi chiamano Stiv!'
 		},
 		projects: {
-			pretitle: '// I miei lavori',
+			pretitle: 'I miei lavori',
 			title: 'PROGETTI',
-			view_all: 'Vedi tutti su GitHub →',
+			view_all: 'Vedi tutti su GitHub',
 			spotlight_label: 'Ultimo rilascio',
 			spotlight_download: 'Scarica',
-			spotlight_website: 'Sito →',
+			spotlight_website: 'Sito',
 			spotlight_platforms: 'Disponibile per'
 		},
 		inspirations: {
-			pretitle: '// Cosa seguo',
+			pretitle: 'Cosa seguo',
 			title: 'INSPIRATIONS',
 			description:
 				'Una collezione curata di strumenti, librerie e progetti che trovo interessanti o che uso quotidianamente.',
 			show_more: 'Mostra altri'
 		},
 		about: {
-			pretitle: '// Chi sono',
+			pretitle: 'Chi sono',
 			title: 'ABOUT',
 			p1_pre: 'Sono un',
 			p1_post: 'del 1997, appassionato di tecnologia e sviluppo software.',
@@ -46,15 +46,32 @@ export const translations = {
 			social: 'Social',
 			rights: 'Tutti i diritti riservati.'
 		},
+		a11y: {
+			skip_to_content: 'Vai al contenuto',
+			new_tab: '(si apre in una nuova scheda)',
+			home: 'Home',
+			open_menu: 'Apri il menu',
+			close_menu: 'Chiudi il menu',
+			menu: 'Menu',
+			close: 'Chiudi',
+			status_bar: 'Barra di stato',
+			pause_animations: 'Metti in pausa le animazioni',
+			play_animations: 'Riprendi le animazioni',
+			animations_label: 'Animazioni',
+			joke_of_the_day: 'Battuta del giorno',
+			github_stars: 'stelle su GitHub',
+			language: 'Lingua',
+			switch_language: 'English'
+		},
 		nav: {
 			projects: 'Progetti',
 			inspirations: 'Inspirations',
 			about: 'About',
 			personal: 'Personal',
-			github: 'GitHub →'
+			github: 'GitHub'
 		},
 		personal: {
-			pretitle: '// Fuori dal codice',
+			pretitle: 'Fuori dal codice',
 			title: 'PERSONAL',
 			description:
 				'Quando non scrivo codice: fotografie, pensieri e tutto quello che non sta in un repository. Un angolo più personale del sito.',
@@ -62,14 +79,14 @@ export const translations = {
 			meta_description:
 				'Fotografie, pensieri e progetti personali di Stefano Bichicchi: il lato fuori dal codice di un Full Stack Developer.',
 			photos: {
-				pretitle: '// Portfolio foto',
+				pretitle: 'Portfolio foto',
 				title: 'SCATTI',
 				empty_title: 'Foto in arrivo',
 				empty_text:
 					'Sto selezionando gli scatti da pubblicare qui. Torna a trovarmi: questa sezione prenderà vita presto.'
 			},
 			blog: {
-				pretitle: '// Blog',
+				pretitle: 'Blog',
 				title: 'APPUNTI',
 				empty_title: 'Nessun articolo — per ora',
 				empty_text:
@@ -79,32 +96,32 @@ export const translations = {
 	},
 	en: {
 		hero: {
-			greeting: '// Hi, I am',
+			greeting: 'Hi, I am',
 			role: 'Full Stack Developer',
 			description_pre: 'I build robust and scalable web applications. Specialized in',
 			description_post: ', and modern architectures.',
-			cta_projects: 'View Projects →',
+			cta_projects: 'View Projects',
 			cta_github: 'GitHub Profile',
 			citation: 'But my friends call me Steve!'
 		},
 		projects: {
-			pretitle: '// My works',
+			pretitle: 'My works',
 			title: 'PROJECTS',
-			view_all: 'View all on GitHub →',
+			view_all: 'View all on GitHub',
 			spotlight_label: 'Latest release',
 			spotlight_download: 'Download',
-			spotlight_website: 'Website →',
+			spotlight_website: 'Website',
 			spotlight_platforms: 'Available for'
 		},
 		inspirations: {
-			pretitle: '// What I follow',
+			pretitle: 'What I follow',
 			title: 'INSPIRATIONS',
 			description:
 				'A curated collection of tools, libraries, and projects I find interesting or use daily.',
 			show_more: 'Show more'
 		},
 		about: {
-			pretitle: '// Who I am',
+			pretitle: 'Who I am',
 			title: 'ABOUT',
 			p1_pre: 'I am a',
 			p1_post: 'born in 1997, passionate about technology and software development.',
@@ -122,15 +139,32 @@ export const translations = {
 			social: 'Social',
 			rights: 'All rights reserved.'
 		},
+		a11y: {
+			skip_to_content: 'Skip to content',
+			new_tab: '(opens in a new tab)',
+			home: 'Home',
+			open_menu: 'Open menu',
+			close_menu: 'Close menu',
+			menu: 'Menu',
+			close: 'Close',
+			status_bar: 'Status bar',
+			pause_animations: 'Pause animations',
+			play_animations: 'Resume animations',
+			animations_label: 'Animations',
+			joke_of_the_day: 'Joke of the day',
+			github_stars: 'GitHub stars',
+			language: 'Language',
+			switch_language: 'Italiano'
+		},
 		nav: {
 			projects: 'Projects',
 			inspirations: 'Inspirations',
 			about: 'About',
 			personal: 'Personal',
-			github: 'GitHub →'
+			github: 'GitHub'
 		},
 		personal: {
-			pretitle: '// Beyond the code',
+			pretitle: 'Beyond the code',
 			title: 'PERSONAL',
 			description:
 				"When I'm not writing code: photographs, thoughts, and everything that doesn't fit in a repository. A more personal corner of the site.",
@@ -138,14 +172,14 @@ export const translations = {
 			meta_description:
 				'Photographs, thoughts, and personal projects by Stefano Bichicchi: the beyond-the-code side of a Full Stack Developer.',
 			photos: {
-				pretitle: '// Photo portfolio',
+				pretitle: 'Photo portfolio',
 				title: 'SHOTS',
 				empty_title: 'Photos coming soon',
 				empty_text:
 					"I'm selecting the shots to publish here. Check back soon: this section will come to life shortly."
 			},
 			blog: {
-				pretitle: '// Blog',
+				pretitle: 'Blog',
 				title: 'NOTES',
 				empty_title: 'No articles — yet',
 				empty_text:

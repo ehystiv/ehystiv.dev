@@ -161,12 +161,45 @@
 		transition: transform 0.3s ease;
 	}
 
-	a:not(.no-underline):hover::after {
+	a:not(.no-underline):hover::after,
+	a:not(.no-underline):focus-visible::after {
 		transform: scaleX(1);
 		transform-origin: left;
 	}
 
 	/* Selection */
+	/* Keyboard focus: always a visible yellow ring */
+	:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+	}
+
+	/* Skip link: off-screen until focused */
+	.skip-link {
+		position: fixed;
+		top: 0.75rem;
+		left: 0.75rem;
+		z-index: 200;
+		padding: 0.6rem 1rem;
+		font-family: var(--font-mono);
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		background-color: var(--color-accent);
+		color: var(--color-ink);
+		transform: translateY(-200%);
+	}
+
+	.skip-link:focus-visible {
+		transform: none;
+		outline-color: var(--color-accent-alt);
+	}
+
+	main:focus {
+		outline: none;
+	}
+
 	::selection {
 		background-color: var(--color-accent-hot);
 		color: var(--color-ink);
@@ -351,12 +384,29 @@
 		color: var(--color-ink);
 	}
 
+	/* clip-path cuts outer outlines: draw the focus ring inside cut-corner elements */
+	.btn-cyber:focus-visible,
+	.cyber-panel:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: -6px;
+	}
+
+	.btn-cyber-filled:focus-visible {
+		outline-color: var(--color-ink);
+	}
+
+	/* "// " before HUD pre-titles: decorative, empty alt text so it is not read aloud */
+	.hud-prefix::before {
+		content: '// ';
+		content: '// ' / '';
+	}
+
 	/* Tag styles */
 	.tag {
 		display: inline-block;
 		padding: 0.15rem 0.6rem;
 		font-family: var(--font-mono);
-		font-size: 0.72rem;
+		font-size: 0.75rem;
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
@@ -408,6 +458,7 @@
 	.glitch::before,
 	.glitch::after {
 		content: attr(data-text);
+		content: attr(data-text) / '';
 		position: absolute;
 		inset: 0;
 		pointer-events: none;
@@ -587,15 +638,34 @@
 		color: var(--color-accent-alt);
 		text-shadow: var(--glow-alt);
 	}
+}
 
-	@media (prefers-reduced-motion: reduce) {
-		.glitch::before,
-		.glitch::after,
-		.flicker,
-		.animate-marquee,
-		.glitch-hover,
-		.btn-cyber {
-			animation: none !important;
-		}
+/* Motion off: OS "reduce motion" or the pause button (html[data-motion='paused']).
+   Animations jump to their end state instead of looping; outside any layer so it beats every animation rule. */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
 	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		animation-delay: 0s !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+html[data-motion='paused'] {
+	scroll-behavior: auto;
+}
+
+html[data-motion='paused'] *,
+html[data-motion='paused'] *::before,
+html[data-motion='paused'] *::after {
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	animation-delay: 0s !important;
+	transition-duration: 0.01ms !important;
 }

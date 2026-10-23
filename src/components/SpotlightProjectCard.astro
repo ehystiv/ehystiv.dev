@@ -17,6 +17,7 @@ interface Props {
 
 const { project, logo, stats, locale } = Astro.props;
 const t = translations[locale].projects;
+const a11y = translations[locale].a11y;
 
 const langColor = languageColors[project.language] || '#666666';
 // Without release data (API down or rate-limited) fall back to the releases page
@@ -27,16 +28,24 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 	<!-- Header -->
 	<div class="flex flex-wrap items-center justify-between gap-2 bg-[var(--color-bar-bg)] px-4 py-2 text-[var(--color-bar-fg)]">
 		<span class="font-mono text-xs font-bold tracking-wider uppercase">
-			<span class="text-[var(--color-accent-hot)]">◆</span> {t.spotlight_label}
+			<span class="text-[var(--color-accent-hot)]" aria-hidden="true">
+				◆
+			</span>{' '}
+			{t.spotlight_label}
 			{stats.version && <span>· {stats.version}</span>}
 		</span>
 		<div class="flex items-center gap-4 font-mono text-xs">
-			{stats.stars !== null && <span title="GitHub stars">★ {stats.stars}</span>}
+			{stats.stars !== null && (
+				<span>
+					<span aria-hidden="true">★</span> {stats.stars}
+					<span class="sr-only">{a11y.github_stars}</span>
+				</span>
+			)}
 			<span class="flex items-center gap-2">
 				<span
 					class="h-2.5 w-2.5"
 					style={`background-color: ${langColor}`}
-					title={project.language}
+					aria-hidden="true"
 				></span>
 				{project.language}
 			</span>
@@ -70,7 +79,7 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 
 			<div class="mb-5 flex flex-wrap gap-2">
 				{project.topics.map((topic) => (
-					<span class="tag text-[10px]">{topic}</span>
+					<span class="tag">{topic}</span>
 				))}
 			</div>
 
@@ -95,7 +104,8 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 					class="btn-cyber btn-cyber-filled text-xs no-underline"
 				>
 					{t.spotlight_download}
-					{stats.version && ` ${stats.version}`} ↓
+					{stats.version && ` ${stats.version}`} <span aria-hidden="true">↓</span>
+					<span class="sr-only">{a11y.new_tab}</span>
 				</a>
 				{project.homepage && (
 					<a
@@ -104,7 +114,8 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 						rel="noopener noreferrer"
 						class="btn-cyber text-xs no-underline"
 					>
-						{t.spotlight_website}
+						{t.spotlight_website} <span aria-hidden="true">→</span>
+						<span class="sr-only">{a11y.new_tab}</span>
 					</a>
 				)}
 				<a
@@ -114,10 +125,11 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 					class="btn-cyber text-xs no-underline"
 				>
 					<span class="inline-flex items-center gap-2">
-						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 							<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path>
 						</svg>
 						GitHub
+						<span class="sr-only">{a11y.new_tab}</span>
 					</span>
 				</a>
 			</div>

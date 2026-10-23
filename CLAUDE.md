@@ -71,6 +71,21 @@ Project entries are hardcoded in `src/data/projects.ts` as a typed `Project[]` a
 | `GITHUB_TOKEN`        | No       | raises GitHub API rate limit for the stars          |
 | `PUBLIC_BLOG_ENABLED` | No       | set to `true` to show the blog section on /personal |
 
+## Accessibility
+
+Keep these conventions when touching UI (verified with axe-core + manual checks; zero axe violations at the time of writing):
+
+- **Strings**: every a11y label lives in `translations[locale].a11y` (skip link, new-tab hint, menu/close labels, pause button, status bar, joke, stars). Never hardcode English labels.
+- **Decorative symbols are never read**: arrows (`→ ↓ ↗`), `>`, `◆ ★`, katakana signs, HUD readouts and the menu numbering are wrapped in `aria-hidden="true"`. Translations contain no `//` or `→`: the `// ` before pre-titles comes from `.hud-prefix::before` with empty CSS alt text (`content: '// ' / ''`).
+- **Glitch copies**: `.glitch::before/::after` use `content: attr(data-text) / ''` so the heading is read once. Decrypt (`scramble()`) moves the real text into an `.sr-only` span and animates only an `aria-hidden` copy.
+- **Repeated/moving text**: marquees (footer copyright, joke) are `aria-hidden` with a single `.sr-only` copy; the status-bar ticker and clock are `aria-hidden`.
+- **Links opening a new tab** (`target="_blank"`) must include `<span class="sr-only">{t.a11y.new_tab}</span>`. Icon-only links need an `.sr-only` name matching the visible icon (label-in-name).
+- **Focus**: global yellow `:focus-visible` ring; cut-corner elements (`.btn-cyber`, `.cyber-panel`) draw it inside (`outline-offset: -6px`) because `clip-path` would cut an outer outline. Skip link to `<main id="main">` is the first focusable element.
+- **Motion**: under `prefers-reduced-motion` or `html[data-motion='paused']` (the `FX` pause button in the status bar, stored in `localStorage.motion`, applied before paint by an inline script) all animations jump to their end state and smooth scroll is off. JS effects check `motionDisabled()` from `glitch-text.ts`.
+- **Mobile menu**: while open, everything outside it gets `inert` (focus and screen readers stay in the dialog).
+- **Minimum text size**: 12px (`text-xs`); don't use `text-[10px]`.
+- **Language**: the language switch has `lang`/`hreflang` of the target language and an `aria-label` in that language.
+
 ## Visual style
 
 The site uses a **cyberpunk / Night City** aesthetic. When adding or modifying UI, stay consistent with these rules:
