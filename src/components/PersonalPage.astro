@@ -42,7 +42,9 @@ const hasPhotos = resolvedCategories.length > 0;
 	<section class="relative overflow-hidden border-b border-[var(--color-border)]">
 		<div class="page-grid absolute inset-0" aria-hidden="true"></div>
 		<div class="relative mx-auto max-w-7xl px-6 py-20">
-			<p class="hud-label mb-2">{t.personal.pretitle}</p>
+			<p class="hud-label mb-2" data-scramble>
+				{t.personal.pretitle}
+			</p>
 			<h1 class="text-4xl font-black md:text-6xl">
 				<span class="glitch neon-text" data-text={t.personal.title}>
 					{t.personal.title}
@@ -59,8 +61,12 @@ const hasPhotos = resolvedCategories.length > 0;
 		<div class="mx-auto max-w-7xl px-6 py-20">
 			<div class="mb-12 flex items-end justify-between">
 				<div>
-					<p class="hud-label mb-2">{t.personal.photos.pretitle}</p>
-					<h2 class="text-4xl font-black md:text-5xl">{t.personal.photos.title}</h2>
+					<p class="hud-label mb-2" data-scramble>
+						{t.personal.photos.pretitle}
+					</p>
+					<h2 class="text-4xl font-black md:text-5xl" data-scramble>
+						{t.personal.photos.title}
+					</h2>
 				</div>
 				<div class="neon-rule mb-3 ml-8 hidden flex-1 md:block"></div>
 			</div>
@@ -128,8 +134,12 @@ const hasPhotos = resolvedCategories.length > 0;
 			<div class="mx-auto max-w-7xl px-6 py-20">
 				<div class="mb-12 flex items-end justify-between">
 					<div>
-						<p class="hud-label mb-2">{t.personal.blog.pretitle}</p>
-						<h2 class="text-4xl font-black md:text-5xl">{t.personal.blog.title}</h2>
+						<p class="hud-label mb-2" data-scramble>
+							{t.personal.blog.pretitle}
+						</p>
+						<h2 class="text-4xl font-black md:text-5xl" data-scramble>
+							{t.personal.blog.title}
+						</h2>
 					</div>
 					<div class="neon-rule mb-3 ml-8 hidden flex-1 md:block" />
 				</div>

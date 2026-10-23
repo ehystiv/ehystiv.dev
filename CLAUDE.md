@@ -45,6 +45,7 @@ Env vars are read with `import.meta.env.*` (no `PUBLIC_` prefix = server-only).
 
 - **Theme** — (currently bypassed by `FORCED_THEME`, see Visual style) an `is:inline` script in the `<head>` of `BaseLayout.astro` reads `localStorage.theme` and sets `data-theme` (+ `.dark` class) on `<html>` before first paint (no FOUC). `ThemeToggle.astro` cycles light → dark → system on click; icons are shown/hidden via CSS rules on `html[data-theme='...']`.
 - **Header** (`Header.astro` `<script>`) — live clock (`setInterval`), mobile menu toggle, sticky ticker activation via `IntersectionObserver`.
+- **Glitch text** (`src/scripts/glitch-text.ts`, imported in `BaseLayout.astro`) — `IntersectionObserver` runs the decrypt animation once on each `[data-scramble]` element; the real text is server-rendered.
 - **Show more interests** (`HomePage.astro` `<script>`) — all cards are rendered server-side; cards beyond the first 8 carry the `hidden` attribute and `data-interest`; the button reveals 8 more per click and removes itself at the end. Requires the `[hidden] { display: none !important }` reset in `global.css` (Tailwind's `block` would otherwise override it).
 
 ### Static data
@@ -119,6 +120,8 @@ Base element styles live in `@layer base` and these classes in `@layer component
 - `.neon-text` / `.neon-text-alt` — accent / cyan text with glow.
 - `.hud-label`, `.neon-rule`, `.hud-corners` — HUD decorations.
 - `.glitch` — RGB-split glitch effect; requires `data-text` equal to the element's text.
+- `.glitch-hover` — short RGB-split + skew burst (`glitch-burst` keyframes) on hover/focus of the element or of a parent `.group`; makes the element `inline-block`. `.btn-cyber` gets the same burst on hover.
+- `data-scramble` (attribute) — text-only element that "decrypts" from random glyphs when scrolled into view, then bursts; driven by `src/scripts/glitch-text.ts` (loaded in `BaseLayout.astro`, skipped under reduced motion). Used on section `h2`s and `.hud-label` pre-titles.
 - `.flicker` — neon sign flicker. `.cursor-blink` — blinking `_` cursor.
 - `.animate-marquee` — continuous horizontal scroll (footer copyright bar).
 

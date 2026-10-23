@@ -78,6 +78,9 @@ const isDev = import.meta.env.DEV;
 
 			<Footer locale={locale} />
 		</div>
+		<script>
+			import '../scripts/glitch-text';
+		</script>
 		{!isDev && <Analytics />}
 		{!isDev && <SpeedInsights />}
 	</body>

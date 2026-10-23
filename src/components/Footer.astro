@@ -34,7 +34,9 @@ const socials = [
 
 			<!-- Quick Links -->
 			<div>
-				<h4 class="hud-label mb-4 font-bold">{t.footer.quick_links}</h4>
+				<h4 class="hud-label mb-4 font-bold" data-scramble>
+					{t.footer.quick_links}
+				</h4>
 				<ul class="space-y-2">
 					<li>
 						<a
@@ -73,7 +75,9 @@ const socials = [
 
 			<!-- Social -->
 			<div>
-				<h4 class="hud-label mb-4 font-bold">{t.footer.social}</h4>
+				<h4 class="hud-label mb-4 font-bold" data-scramble>
+					{t.footer.social}
+				</h4>
 				<div class="flex gap-3">
 					{socials.map((social) => (
 						<a

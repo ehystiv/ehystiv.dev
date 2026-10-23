@@ -152,7 +152,7 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 				<!-- Greeting -->
 				<p class="hud-label mb-6 flex items-center gap-3">
 					<span class="inline-block h-2 w-2 bg-[var(--color-accent-hot)] shadow-[0_0_8px_var(--color-accent-hot)]"></span>
-					{t.hero.greeting}
+					<span data-scramble>{t.hero.greeting}</span>
 				</p>
 
 				<!-- Name and Profile Pic -->
@@ -235,8 +235,12 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 			<!-- Section header -->
 			<div class="mb-12 flex items-end justify-between">
 				<div>
-					<p class="hud-label mb-2">{t.projects.pretitle}</p>
-					<h2 class="text-4xl font-black md:text-5xl">{t.projects.title}</h2>
+					<p class="hud-label mb-2" data-scramble>
+						{t.projects.pretitle}
+					</p>
+					<h2 class="text-4xl font-black md:text-5xl" data-scramble>
+						{t.projects.title}
+					</h2>
 				</div>
 				<div class="neon-rule mb-3 ml-8 hidden flex-1 md:block"></div>
 			</div>
@@ -275,8 +279,12 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 	<section id="inspirations" class="scroll-mt-4 border-b border-[var(--color-border)]">
 		<div class="mx-auto max-w-7xl px-6 py-20">
 			<div class="mb-12">
-				<p class="hud-label mb-2">{t.inspirations.pretitle}</p>
-				<h2 class="text-4xl font-black md:text-5xl">{t.inspirations.title}</h2>
+				<p class="hud-label mb-2" data-scramble>
+					{t.inspirations.pretitle}
+				</p>
+				<h2 class="text-4xl font-black md:text-5xl" data-scramble>
+					{t.inspirations.title}
+				</h2>
 				<p class="mt-4 max-w-2xl text-[var(--color-muted)]">{t.inspirations.description}</p>
 			</div>
 
@@ -309,8 +317,12 @@ const INITIAL_VISIBLE_INTERESTS = 8;
 			<div class="grid gap-12 lg:grid-cols-2">
 				<!-- About text -->
 				<div>
-					<p class="hud-label mb-2">{t.about.pretitle}</p>
-					<h2 class="mb-8 text-4xl font-black md:text-5xl">{t.about.title}</h2>
+					<p class="hud-label mb-2" data-scramble>
+						{t.about.pretitle}
+					</p>
+					<h2 class="mb-8 text-4xl font-black md:text-5xl" data-scramble>
+						{t.about.title}
+					</h2>
 
 					<div class="space-y-4 text-lg leading-relaxed text-[var(--color-muted)]">
 						<p>

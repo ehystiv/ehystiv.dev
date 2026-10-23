@@ -528,12 +528,74 @@
 		animation: marquee 20s linear infinite;
 	}
 
+	/* Short RGB-split + skew burst, no data-text needed.
+	   Runs on hover (own or of a parent .group), on focus, or while .is-glitching is set by script. */
+	@keyframes glitch-burst {
+		0% {
+			transform: none;
+			text-shadow:
+				-2px 0 var(--color-accent-alt),
+				2px 0 var(--color-accent-hot);
+		}
+		20% {
+			transform: translate(-2px, 1px) skewX(-8deg);
+			text-shadow:
+				3px 0 var(--color-accent-alt),
+				-3px 0 var(--color-accent-hot);
+		}
+		40% {
+			transform: translate(2px, -1px) skewX(6deg);
+			text-shadow:
+				-4px -1px var(--color-accent-alt),
+				4px 1px var(--color-accent-hot);
+			clip-path: inset(10% 0 30% 0);
+		}
+		60% {
+			transform: translate(-1px, 0);
+			text-shadow:
+				2px 1px var(--color-accent-alt),
+				-2px -1px var(--color-accent-hot);
+			clip-path: inset(45% 0 0 0);
+		}
+		80% {
+			transform: translate(1px, 0) skewX(-3deg);
+			clip-path: none;
+		}
+		100% {
+			transform: none;
+		}
+	}
+
+	.glitch-hover {
+		display: inline-block;
+	}
+
+	.glitch-hover:hover,
+	.glitch-hover:focus-visible,
+	.group:hover .glitch-hover,
+	.glitch-hover.is-glitching,
+	[data-scramble].is-glitching {
+		animation: glitch-burst 0.4s steps(1) 1;
+	}
+
+	.btn-cyber:hover {
+		animation: glitch-burst 0.35s steps(1) 1;
+	}
+
+	/* Text being decrypted by the scramble script */
+	[data-scramble].is-scrambling {
+		color: var(--color-accent-alt);
+		text-shadow: var(--glow-alt);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.glitch::before,
 		.glitch::after,
 		.flicker,
-		.animate-marquee {
-			animation: none;
+		.animate-marquee,
+		.glitch-hover,
+		.btn-cyber {
+			animation: none !important;
 		}
 	}
 }

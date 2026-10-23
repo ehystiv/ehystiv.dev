@@ -50,7 +50,10 @@ const navLinks = [
 		<!-- Desktop Navigation -->
 		<nav class="hidden items-center gap-6 md:flex">
 			{navLinks.map((link) => (
-				<a href={link.href} class="nav-link font-mono text-sm font-bold tracking-wider uppercase">
+				<a
+					href={link.href}
+					class="nav-link glitch-hover font-mono text-sm font-bold tracking-wider uppercase"
+				>
 					{link.label}
 				</a>
 			))}
@@ -64,7 +67,7 @@ const navLinks = [
 			</a>
 
 			<!-- Language Switcher -->
-			<a href={langSwitchHref} class="nav-link font-mono text-sm font-bold uppercase">
+			<a href={langSwitchHref} class="nav-link glitch-hover font-mono text-sm font-bold uppercase">
 				{locale === 'it' ? 'EN' : 'IT'}
 			</a>
 
@@ -94,7 +97,10 @@ const navLinks = [
 	>
 		<nav class="flex flex-col gap-6 text-center">
 			{navLinks.map((link) => (
-				<a href={link.href} class="nav-link font-mono text-lg font-bold tracking-wider uppercase">
+				<a
+					href={link.href}
+					class="nav-link glitch-hover font-mono text-lg font-bold tracking-wider uppercase"
+				>
 					{link.label}
 				</a>
 			))}
@@ -108,7 +114,10 @@ const navLinks = [
 			</a>
 
 			<div class="flex justify-center gap-4 border-t border-[var(--color-border)] pt-4">
-				<a href={langSwitchHref} class="nav-link font-mono text-lg font-bold uppercase">
+				<a
+					href={langSwitchHref}
+					class="nav-link glitch-hover font-mono text-lg font-bold uppercase"
+				>
 					{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
 				</a>
 			</div>
