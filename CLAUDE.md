@@ -92,7 +92,7 @@ The site uses a **cyberpunk / Night City** aesthetic. When adding or modifying U
 
 ### Design language
 
-- Thin 1px neon borders (`--color-border`), never thick black borders. Panels and buttons have a **cut bottom-right corner** (`clip-path`); the diagonal edge is redrawn with a gradient because `clip-path` removes the border there.
+- Thin 1px neon borders (`--color-border`), never thick black borders. Panels and buttons have a **cut bottom-right corner** (`clip-path`). Their real border is transparent; the 1px frame is painted by `::before` as a single evenodd `clip-path` shape (outer path minus inner path), so the diagonal always meets the edges. Don't put other `::before` content on `.cyber-panel` / `.btn-cyber`; tune them with `--frame-cut` / `--frame-color` (or `--cut`, `--panel-line`, `--btn-line`).
 - Glow instead of drop shadows: `text-shadow`/inset `box-shadow` via `--glow-accent`, `--glow-alt`, `--glow-inset-hover`. Outer box-shadows on clipped elements get cut off, so hover effects use inset glow + `translateY(-4px)` (`.hover-neon`).
 - Palette: Night City yellow `#FCEE0A`, neon cyan `#00F0FF`, hot magenta `#FF2A6D`. Two themes: **Night** (dark, neon on near-black) and **Day** (light, black on Night City yellow, red `#E6003A` accent).
 - HUD details: `// LABEL` pre-titles (`.hud-label`), neon gradient rules (`.neon-rule`), corner brackets (`.hud-corners`), CRT scanlines over the page (`body::after`), vertical katakana neon sign in the hero.

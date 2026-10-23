@@ -285,26 +285,54 @@
 
 	/* Panel: surface + border + cut bottom-right corner.
 	   The 1px diagonal edge of the cut is drawn with a gradient, since clip-path removes the border there. */
-	.cyber-panel {
-		--panel-line: var(--color-border);
+	/* Cut-corner frame shared by panels and buttons.
+	   The element is clipped to the cut shape; its real border stays transparent (keeps the box size)
+	   and ::before paints a 1px frame as one shape (outer path minus inner path, evenodd), so the
+	   diagonal always meets the straight edges. Set --frame-cut and --frame-color. */
+	.cyber-panel,
+	.btn-cyber {
 		position: relative;
-		border: 1px solid var(--panel-line);
-		background:
-			linear-gradient(
-				135deg,
-				transparent calc(100% - var(--cut) * 0.7071 - 1.5px),
-				var(--panel-line) calc(100% - var(--cut) * 0.7071 - 1.5px),
-				var(--panel-line) calc(100% - var(--cut) * 0.7071),
-				transparent calc(100% - var(--cut) * 0.7071)
-			),
-			var(--color-surface);
+		border: 1px solid transparent;
 		clip-path: polygon(
 			0 0,
 			100% 0,
-			100% calc(100% - var(--cut)),
-			calc(100% - var(--cut)) 100%,
+			100% calc(100% - var(--frame-cut)),
+			calc(100% - var(--frame-cut)) 100%,
 			0 100%
 		);
+	}
+
+	.cyber-panel::before,
+	.btn-cyber::before {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		pointer-events: none;
+		background-color: var(--frame-color);
+		transition: background-color 0.2s ease;
+		/* inner diagonal is the outer one moved 1px inwards: offset along each edge = 1px * (sqrt 2 - 1) */
+		clip-path: polygon(
+			evenodd,
+			0 0,
+			100% 0,
+			100% calc(100% - var(--frame-cut)),
+			calc(100% - var(--frame-cut)) 100%,
+			0 100%,
+			0 0,
+			1px 1px,
+			1px calc(100% - 1px),
+			calc(100% - var(--frame-cut) - 0.414px) calc(100% - 1px),
+			calc(100% - 1px) calc(100% - var(--frame-cut) - 0.414px),
+			calc(100% - 1px) 1px,
+			1px 1px
+		);
+	}
+
+	.cyber-panel {
+		--panel-line: var(--color-border);
+		--frame-cut: var(--cut);
+		--frame-color: var(--panel-line);
+		background-color: var(--color-surface);
 		box-shadow: var(--glow-inset);
 	}
 
@@ -318,7 +346,6 @@
 
 	.hover-neon:hover {
 		--panel-line: var(--color-accent-alt);
-		border-color: var(--color-accent-alt);
 		transform: translateY(-4px);
 		box-shadow: var(--glow-inset-hover);
 	}
@@ -333,23 +360,11 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
-		border: 1px solid var(--btn-line);
-		background: linear-gradient(
-			135deg,
-			transparent calc(100% - var(--cut-sm) * 0.7071 - 1.5px),
-			var(--btn-line) calc(100% - var(--cut-sm) * 0.7071 - 1.5px),
-			var(--btn-line) calc(100% - var(--cut-sm) * 0.7071),
-			transparent calc(100% - var(--cut-sm) * 0.7071)
-		);
+		--frame-cut: var(--cut-sm);
+		--frame-color: var(--btn-line);
+		background-color: transparent;
 		color: var(--btn-line);
 		cursor: pointer;
-		clip-path: polygon(
-			0 0,
-			100% 0,
-			100% calc(100% - var(--cut-sm)),
-			calc(100% - var(--cut-sm)) 100%,
-			0 100%
-		);
 		transition:
 			background-color 0.15s ease,
 			color 0.15s ease,
@@ -370,7 +385,6 @@
 		--btn-line: var(--color-accent);
 		background-color: var(--color-accent);
 		color: var(--color-bar-fg);
-		border-color: var(--color-accent);
 	}
 
 	:root:not(.dark) .btn-cyber-filled {
@@ -380,7 +394,6 @@
 	.btn-cyber-filled:hover {
 		--btn-line: var(--color-accent-hot);
 		background-color: var(--color-accent-hot);
-		border-color: var(--color-accent-hot);
 		color: var(--color-ink);
 	}
 
