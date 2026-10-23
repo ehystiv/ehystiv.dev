@@ -57,6 +57,7 @@ Project entries are hardcoded in `src/data/projects.ts` as a typed `Project[]` a
 `/personal` (`PersonalPage.astro`) hosts the photo portfolio and the future blog:
 
 - **Photos** — grouped by category: `photoCategories` in `src/data/photos.ts` (`PhotoCategory[]`, empty by default), image files in `src/assets/photos/{categoryId}/`, resolved via a recursive `import.meta.glob`. Each category renders as its own subsection (anchor `#photos-{id}`); empty categories are skipped, and with no entries at all an empty-state card is shown. Clicking a photo opens a native `<dialog>` lightbox (vanilla script in the component).
+- **Image optimization** — the originals (~4000px, 3–8 MB each) are never sent to the browser. Grid thumbnails use `<Picture>` from `astro:assets` (AVIF 400/800/1200w with WebP fallback, `sizes` matching the 1/2/3-column grid; first row `eager` + `fetchpriority=high`), the lightbox gets a 2000px WebP from `getImage()` via `data-full`. Both `personal.astro` pages are `export const prerender = true` so the variants are generated once at build time (cold build ~2 min, then cached in `node_modules/.astro`). Keep it that way when adding photos: don't use `photo.image.src` directly.
 - **Blog** — the section renders only when `PUBLIC_BLOG_ENABLED=true` is set (public env var, inlined at build time). Until then it is completely absent from the markup.
 
 ### Analytics
