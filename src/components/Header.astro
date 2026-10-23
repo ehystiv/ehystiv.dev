@@ -1,5 +1,5 @@
 ---
-import logo from '../assets/logo.png';
+import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { translations, type Locale } from '../i18n/translations';
 
@@ -32,14 +32,10 @@ const navLinks = [
 ---
 
 <header id="site-header" class="relative border-b border-[var(--color-border)]">
-	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
+	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
 		<!-- Logo / Name -->
 		<a href={homeHref} class="group flex items-center gap-3 no-underline">
-			<img
-				src={logo.src}
-				alt="ehystiv.dev logo"
-				class="nav-logo h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
-			/>
+			<Logo class="h-14 w-14 transition-transform duration-200 group-hover:scale-105" />
 			<div class="hidden flex-col leading-none sm:flex">
 				<span class="font-display text-lg font-black tracking-widest">
 					EHYSTIV<span class="neon-text flicker">.DEV</span>
@@ -141,16 +137,6 @@ const navLinks = [
 </div>
 
 <style>
-	/* The logo PNG is black on white: blend the white away (day) or invert and screen it (night) */
-	.nav-logo {
-		mix-blend-mode: multiply;
-	}
-
-	:global(.dark) .nav-logo {
-		filter: invert(1);
-		mix-blend-mode: screen;
-	}
-
 	.nav-link {
 		transition:
 			color 0.2s ease,

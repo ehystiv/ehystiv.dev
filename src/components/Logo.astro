@@ -1,0 +1,70 @@
+---
+// "E" monogram (ehystiv) with a terminal cursor, in a cut-corner neon frame. Colors follow the theme variables.
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={['site-logo', className]}
+	viewBox="0 0 64 64"
+	xmlns="http://www.w3.org/2000/svg"
+	role="img"
+	aria-label="ehystiv.dev logo"
+>
+	<path class="logo-frame" d="M14 3.5H60.5V47L47 60.5H3.5V17Z" fill="none" stroke-width="3"></path>
+	<path class="logo-glitch" d="M15 17H44L40 23H22V29H35L32 35H22V41H44L40 47H15Z"></path>
+	<path class="logo-e" d="M17 17H46L42 23H24V29H37L34 35H24V41H46L42 47H17Z"></path>
+	<path class="logo-cursor" d="M41 29H49L46 35H38Z"></path>
+</svg>
+
+<style>
+	.logo-frame {
+		stroke: var(--color-accent-alt);
+	}
+
+	.logo-glitch {
+		fill: var(--color-accent-hot);
+		transition: transform 0.15s ease;
+	}
+
+	.logo-e {
+		fill: var(--color-accent);
+	}
+
+	.logo-cursor {
+		fill: var(--color-accent-alt);
+		animation: logo-blink 1.1s step-end infinite;
+	}
+
+	/* Day theme: black frame, teal chromatic offset */
+	:global(:root:not(.dark)) .logo-frame {
+		stroke: var(--color-fg);
+	}
+
+	:global(:root:not(.dark)) .logo-glitch {
+		fill: var(--color-accent-alt);
+	}
+
+	:global(.dark) .site-logo {
+		filter: drop-shadow(0 0 6px rgb(0 240 255 / 0.45));
+	}
+
+	:global(.group:hover) .logo-glitch {
+		transform: translateX(-2px);
+	}
+
+	@keyframes logo-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.logo-cursor {
+			animation: none;
+		}
+	}
+</style>

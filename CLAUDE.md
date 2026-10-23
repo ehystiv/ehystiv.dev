@@ -80,6 +80,7 @@ The site uses a **cyberpunk / Night City** aesthetic. When adding or modifying U
 - Glow instead of drop shadows: `text-shadow`/inset `box-shadow` via `--glow-accent`, `--glow-alt`, `--glow-inset-hover`. Outer box-shadows on clipped elements get cut off, so hover effects use inset glow + `translateY(-4px)` (`.hover-neon`).
 - Palette: Night City yellow `#FCEE0A`, neon cyan `#00F0FF`, hot magenta `#FF2A6D`. Two themes: **Night** (dark, neon on near-black) and **Day** (light, black on Night City yellow, red `#E6003A` accent).
 - HUD details: `// LABEL` pre-titles (`.hud-label`), neon gradient rules (`.neon-rule`), corner brackets (`.hud-corners`), CRT scanlines over the page (`body::after`), vertical katakana neon sign in the hero.
+- Logo: inline SVG in `src/components/Logo.astro` ("E" monogram + blinking terminal cursor in a cut-corner frame), colored via theme variables. `src/assets/favicon.svg` is the same mark with fixed Night colors.
 - All interactive text links (except those with `.no-underline`) get a sliding glowing underline in `--color-accent` via `::after`.
 
 ### Typography
