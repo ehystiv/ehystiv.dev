@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import { FORCED_THEME } from '../theme';
 import { translations, type Locale } from '../i18n/translations';
 
 interface Props {
@@ -68,12 +69,12 @@ const navLinks = [
 			</a>
 
 			<!-- Theme Toggle -->
-			<ThemeToggle />
+			{!FORCED_THEME && <ThemeToggle />}
 		</nav>
 
 		<!-- Mobile Menu Button -->
 		<div class="flex items-center gap-4 md:hidden">
-			<ThemeToggle />
+			{!FORCED_THEME && <ThemeToggle />}
 			<button
 				id="mobile-menu-button"
 				class="btn-cyber px-3 py-2 text-sm"

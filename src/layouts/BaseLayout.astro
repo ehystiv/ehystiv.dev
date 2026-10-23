@@ -6,6 +6,7 @@ import profilePic from '../assets/profile_pic.png';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { translations, type Locale } from '../i18n/translations';
+import { FORCED_THEME } from '../theme';
 import '../styles/global.css';
 
 interface Props {
@@ -24,7 +25,11 @@ const isDev = import.meta.env.DEV;
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html
+	lang={locale}
+	data-theme={FORCED_THEME ?? undefined}
+	class={FORCED_THEME === 'dark' ? 'dark' : undefined}
+>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,8 +53,10 @@ const isDev = import.meta.env.DEV;
 			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
-		<script is:inline>
+		<script is:inline define:vars={{ forcedTheme: FORCED_THEME }}>
 			(function () {
+				// Forced theme: already applied server-side on <html>, ignore the stored preference
+				if (forcedTheme) return;
 				const stored = localStorage.getItem('theme');
 				const theme =
 					stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';

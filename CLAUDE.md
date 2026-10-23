@@ -43,7 +43,7 @@ Env vars are read with `import.meta.env.*` (no `PUBLIC_` prefix = server-only).
 
 ### Client-side interactivity (vanilla)
 
-- **Theme** — an `is:inline` script in the `<head>` of `BaseLayout.astro` reads `localStorage.theme` and sets `data-theme` (+ `.dark` class) on `<html>` before first paint (no FOUC). `ThemeToggle.astro` cycles light → dark → system on click; icons are shown/hidden via CSS rules on `html[data-theme='...']`.
+- **Theme** — (currently bypassed by `FORCED_THEME`, see Visual style) an `is:inline` script in the `<head>` of `BaseLayout.astro` reads `localStorage.theme` and sets `data-theme` (+ `.dark` class) on `<html>` before first paint (no FOUC). `ThemeToggle.astro` cycles light → dark → system on click; icons are shown/hidden via CSS rules on `html[data-theme='...']`.
 - **Header** (`Header.astro` `<script>`) — live clock (`setInterval`), mobile menu toggle, sticky ticker activation via `IntersectionObserver`.
 - **Show more interests** (`HomePage.astro` `<script>`) — all cards are rendered server-side; cards beyond the first 8 carry the `hidden` attribute and `data-interest`; the button reveals 8 more per click and removes itself at the end. Requires the `[hidden] { display: none !important }` reset in `global.css` (Tailwind's `block` would otherwise override it).
 
@@ -104,7 +104,9 @@ The site uses a **cyberpunk / Night City** aesthetic. When adding or modifying U
 | `--color-bar-bg/-fg` | black/yellow | yellow/black            |
 | `--color-ink`        | `#05040b`    | (same)                  |
 
-Dark mode is applied by adding the `.dark` class to `<html>` (managed by the inline theme script + `ThemeToggle` script). An explicit `data-theme="light"` choice overrides the OS dark preference; with no JS, `prefers-color-scheme` is the fallback. Always use the CSS variables rather than hardcoded colors.
+**The site is currently locked to Night**: `FORCED_THEME = 'dark'` in `src/theme.ts` renders `class="dark" data-theme="dark"` on `<html>` server-side (works without JS), makes the inline theme script skip `localStorage`, and hides `ThemeToggle` in `Header.astro`. The Day palette and all switching code are kept: set `FORCED_THEME = null` to restore the toggle.
+
+When not forced, dark mode is applied by adding the `.dark` class to `<html>` (managed by the inline theme script + `ThemeToggle` script). An explicit `data-theme="light"` choice overrides the OS dark preference; with no JS, `prefers-color-scheme` is the fallback. Always use the CSS variables rather than hardcoded colors.
 
 ### Reusable CSS classes (defined in `src/styles/global.css`)
 
