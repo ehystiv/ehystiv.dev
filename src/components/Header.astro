@@ -22,65 +22,52 @@ if (locale === 'it') {
 	const unprefixed = currentPath.replace(/^\/en/, '');
 	langSwitchHref = unprefixed === '' ? '/' : unprefixed;
 }
+
+const navLinks = [
+	{ href: `${homeHref}#projects`, label: t.nav.projects },
+	{ href: `${homeHref}#inspirations`, label: t.nav.inspirations },
+	{ href: `${homeHref}#about`, label: t.nav.about },
+	{ href: personalHref, label: t.nav.personal }
+];
 ---
 
-<header id="site-header" class="border-brutal-thin border-t-0 border-r-0 border-b-4 border-l-0">
+<header id="site-header" class="relative border-b border-[var(--color-border)]">
 	<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
 		<!-- Logo / Name -->
 		<a href={homeHref} class="group flex items-center gap-3 no-underline">
 			<img
 				src={logo.src}
 				alt="ehystiv.dev logo"
-				class="nav-logo h-24 w-auto object-contain transition-transform duration-200 group-hover:scale-110"
+				class="nav-logo h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
 			/>
-			<div class="hidden sm:block">
-				<span class="font-mono text-lg font-bold tracking-tight">EHYSTIV</span>
-				<span class="font-mono text-lg font-bold tracking-tight text-[var(--color-accent)]">
-					.DEV
+			<div class="hidden flex-col leading-none sm:flex">
+				<span class="font-display text-lg font-black tracking-widest">
+					EHYSTIV<span class="neon-text flicker">.DEV</span>
+				</span>
+				<span class="mt-1 font-mono text-[10px] tracking-[0.3em] text-[var(--color-muted)] uppercase">
+					Night City // Netrunner
 				</span>
 			</div>
 		</a>
 
 		<!-- Desktop Navigation -->
 		<nav class="hidden items-center gap-6 md:flex">
-			<a
-				href={`${homeHref}#projects`}
-				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.projects}
-			</a>
-			<a
-				href={`${homeHref}#inspirations`}
-				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.inspirations}
-			</a>
-			<a
-				href={`${homeHref}#about`}
-				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.about}
-			</a>
-			<a
-				href={personalHref}
-				class="font-mono text-sm font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.personal}
-			</a>
+			{navLinks.map((link) => (
+				<a href={link.href} class="nav-link font-mono text-sm font-bold tracking-wider uppercase">
+					{link.label}
+				</a>
+			))}
 			<a
 				href="https://github.com/ehystiv"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="btn-brutal inline-block text-xs"
+				class="btn-cyber inline-block text-xs no-underline"
 			>
 				{t.nav.github}
 			</a>
 
 			<!-- Language Switcher -->
-			<a
-				href={langSwitchHref}
-				class="font-mono text-sm font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
+			<a href={langSwitchHref} class="nav-link font-mono text-sm font-bold uppercase">
 				{locale === 'it' ? 'EN' : 'IT'}
 			</a>
 
@@ -93,7 +80,7 @@ if (locale === 'it') {
 			<ThemeToggle />
 			<button
 				id="mobile-menu-button"
-				class="btn-brutal px-3 py-2 text-sm"
+				class="btn-cyber px-3 py-2 text-sm"
 				aria-label="Toggle menu"
 				aria-expanded="false"
 				aria-controls="mobile-menu"
@@ -106,69 +93,95 @@ if (locale === 'it') {
 	<!-- Mobile Menu Overlay -->
 	<div
 		id="mobile-menu"
-		class="border-brutal-thin hidden border-t-[var(--border-thin)] bg-[var(--color-bg)] p-6 md:hidden"
+		class="hidden border-t border-[var(--color-border)] bg-[var(--color-surface)] p-6 md:hidden"
 	>
 		<nav class="flex flex-col gap-6 text-center">
-			<a
-				href={`${homeHref}#projects`}
-				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.projects}
-			</a>
-			<a
-				href={`${homeHref}#inspirations`}
-				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.inspirations}
-			</a>
-			<a
-				href={`${homeHref}#about`}
-				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.about}
-			</a>
-			<a
-				href={personalHref}
-				class="font-mono text-lg font-bold tracking-wider uppercase transition-colors hover:text-[var(--color-accent)]"
-			>
-				{t.nav.personal}
-			</a>
+			{navLinks.map((link) => (
+				<a href={link.href} class="nav-link font-mono text-lg font-bold tracking-wider uppercase">
+					{link.label}
+				</a>
+			))}
 			<a
 				href="https://github.com/ehystiv"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="btn-brutal mx-auto inline-block"
+				class="btn-cyber mx-auto inline-block no-underline"
 			>
 				{t.nav.github}
 			</a>
 
-			<div class="flex justify-center gap-4 border-t border-[var(--color-fg)] pt-4">
-				<a
-					href={langSwitchHref}
-					class="font-mono text-lg font-bold uppercase transition-colors hover:text-[var(--color-accent)]"
-				>
+			<div class="flex justify-center gap-4 border-t border-[var(--color-border)] pt-4">
+				<a href={langSwitchHref} class="nav-link font-mono text-lg font-bold uppercase">
 					{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
 				</a>
 			</div>
 		</nav>
 	</div>
+
+	<!-- Neon edge under the header -->
+	<div class="neon-rule absolute right-0 -bottom-px left-0"></div>
 </header>
 
 <!-- Ticker / Time bar -->
-<div class="sticky top-0 z-50 flex items-center justify-between border-b-4 border-[var(--color-fg)] bg-[var(--color-fg)] px-6 py-1 text-[var(--color-bg)]">
-	<div class="ticker-wrapper">
-		<div id="header-ticker" class="ticker-inner">
-			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
-			<span class="ticker-item">EHYSTIV.DEV</span>
-			<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+<div class="ticker-bar sticky top-0 z-50 flex items-center justify-between bg-[var(--color-bar-bg)] px-6 py-1 text-[var(--color-bar-fg)]">
+	<div class="flex items-center gap-3">
+		<span class="status-dot" aria-hidden="true"></span>
+		<div class="ticker-wrapper">
+			<div id="header-ticker" class="ticker-inner">
+				<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+				<span class="ticker-item">EHYSTIV.DEV // ONLINE</span>
+				<span class="ticker-item">FULL STACK WEB DEVELOPER</span>
+			</div>
 		</div>
 	</div>
-	<span id="header-clock" data-locale={locale} class="font-mono text-xs tabular-nums"></span>
+	<span class="flex items-center gap-2 font-mono text-xs font-bold tabular-nums">
+		<span class="hidden opacity-70 sm:inline">NC.TIME</span>
+		<span id="header-clock" data-locale={locale}></span>
+	</span>
 </div>
 
 <style>
+	/* The logo PNG is black on white: blend the white away (day) or invert and screen it (night) */
+	.nav-logo {
+		mix-blend-mode: multiply;
+	}
+
 	:global(.dark) .nav-logo {
 		filter: invert(1);
+		mix-blend-mode: screen;
+	}
+
+	.nav-link {
+		transition:
+			color 0.2s ease,
+			text-shadow 0.2s ease;
+	}
+
+	.nav-link:hover {
+		color: var(--color-accent);
+		text-shadow: var(--glow-accent);
+	}
+
+	.ticker-bar {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 6px));
+	}
+
+	.status-dot {
+		width: 8px;
+		height: 8px;
+		background-color: var(--color-accent-hot);
+		box-shadow: 0 0 6px var(--color-accent-hot);
+		animation: pulse 1.6s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.3;
+		}
 	}
 
 	.ticker-wrapper {
@@ -185,7 +198,7 @@ if (locale === 'it') {
 		font-family: var(--font-mono, monospace);
 		font-size: 0.75rem;
 		line-height: 1rem;
-		letter-spacing: 0.1em;
+		letter-spacing: 0.15em;
 		font-weight: 700;
 	}
 

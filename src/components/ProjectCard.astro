@@ -12,13 +12,15 @@ const { project, locale } = Astro.props;
 const langColor = languageColors[project.language] || '#666666';
 ---
 
-<article class="group border-brutal hover-brutal relative bg-[var(--color-bg)] p-0">
+<article class="group cyber-panel hover-neon p-0">
 	<!-- Header -->
-	<div class="flex items-center justify-between border-b border-b-[var(--border-thick)] bg-[var(--color-fg)] px-4 py-2 text-[var(--color-bg)]">
-		<span class="font-mono text-sm font-bold tracking-wider uppercase">{project.name}</span>
-		<div class="flex items-center gap-2">
+	<div class="flex items-center justify-between border-b border-[var(--color-border)] px-5 py-3">
+		<span class="font-display text-sm font-bold tracking-wider uppercase transition-colors group-hover:text-[var(--color-accent)]">
+			{project.name}
+		</span>
+		<div class="flex items-center gap-2 text-[var(--color-muted)]">
 			<span
-				class="h-3 w-3 rounded-full"
+				class="h-2.5 w-2.5"
 				style={`background-color: ${langColor}`}
 				title={project.language}
 			></span>
@@ -45,7 +47,7 @@ const langColor = languageColors[project.language] || '#666666';
 				href={project.githubUrl}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="btn-brutal flex-1 text-center text-xs no-underline"
+				class="btn-cyber flex-1 text-center text-xs no-underline"
 			>
 				<span class="inline-flex items-center gap-2">
 					<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -59,7 +61,7 @@ const langColor = languageColors[project.language] || '#666666';
 					href={project.homepage}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="btn-brutal btn-brutal-filled flex-1 text-center text-xs no-underline"
+					class="btn-cyber btn-cyber-filled flex-1 text-center text-xs no-underline"
 				>
 					Live Demo →
 				</a>
@@ -69,8 +71,9 @@ const langColor = languageColors[project.language] || '#666666';
 
 	<!-- Featured badge -->
 	{project.featured && (
-		<div class="absolute -top-2 -right-2 bg-[var(--color-accent)] px-2 py-1 font-mono text-[10px] font-bold text-[var(--color-bg)] uppercase">
-			★
-		</div>
+		<div
+			class="absolute top-0 left-0 h-full w-0.5 bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent)]"
+			aria-hidden="true"
+		/>
 	)}
 </article>

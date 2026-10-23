@@ -72,40 +72,51 @@ Project entries are hardcoded in `src/data/projects.ts` as a typed `Project[]` a
 
 ## Visual style
 
-The site uses a **brutalist** aesthetic. When adding or modifying UI, stay consistent with these rules:
+The site uses a **cyberpunk / Night City** aesthetic. When adding or modifying UI, stay consistent with these rules:
 
 ### Design language
 
-- Heavy black borders (`border-brutal` = 4px, `border-brutal-thin` = 2px), all solid and strictly geometric.
-- Offset box-shadows that mimic a physical lift: `--shadow-brutal` (6px 6px), `--shadow-brutal-sm` (4px 4px). On hover, elements translate `(-4px, -4px)` and the shadow grows (`--shadow-brutal-hover` 8px 8px) via the `.hover-brutal` class.
-- Accent color `#FF5500` (orange) — used for highlights, link underline animations, hover states, and the `.DEV` part of the logo. Never swap it for another color; change the CSS variable `--color-accent` if a redesign is needed.
-- All interactive text links (except those with `.no-underline`) get a sliding underline in `--color-accent` via a CSS `::after` pseudo-element.
+- Thin 1px neon borders (`--color-border`), never thick black borders. Panels and buttons have a **cut bottom-right corner** (`clip-path`); the diagonal edge is redrawn with a gradient because `clip-path` removes the border there.
+- Glow instead of drop shadows: `text-shadow`/inset `box-shadow` via `--glow-accent`, `--glow-alt`, `--glow-inset-hover`. Outer box-shadows on clipped elements get cut off, so hover effects use inset glow + `translateY(-4px)` (`.hover-neon`).
+- Palette: Night City yellow `#FCEE0A`, neon cyan `#00F0FF`, hot magenta `#FF2A6D`. Two themes: **Night** (dark, neon on near-black) and **Day** (light, black on Night City yellow, red `#E6003A` accent).
+- HUD details: `// LABEL` pre-titles (`.hud-label`), neon gradient rules (`.neon-rule`), corner brackets (`.hud-corners`), CRT scanlines over the page (`body::after`), vertical katakana neon sign in the hero.
+- All interactive text links (except those with `.no-underline`) get a sliding glowing underline in `--color-accent` via `::after`.
 
 ### Typography
 
-- **Headings** → `JetBrains Mono` (monospace), weight 800, tight tracking (`-0.02em`).
-- **Body** → `Space Grotesk` (sans-serif).
-- UI labels, tags, buttons, and nav items are always `font-mono`, `uppercase`, `tracking-wider`.
+- **Headings** → `Orbitron` (`--font-display`), weight 800–900, uppercase.
+- **Body** → `Rajdhani` (sans-serif, weight 500).
+- UI labels, tags, buttons, and nav items are always `font-mono` (`JetBrains Mono`), `uppercase`, wide tracking.
 
 ### CSS variables (defined in `src/styles/global.css`)
 
-| Variable             | Light     | Dark      |
-| -------------------- | --------- | --------- |
-| `--color-bg`         | `#ffffff` | `#0a0a0a` |
-| `--color-fg`         | `#000000` | `#ffffff` |
-| `--color-accent`     | `#FF5500` | (same)    |
-| `--color-accent-alt` | `#00ff88` | (same)    |
-| `--color-muted`      | `#666666` | `#999999` |
+| Variable             | Day (light)  | Night (dark)            |
+| -------------------- | ------------ | ----------------------- |
+| `--color-bg`         | `#fcee0a`    | `#05040b`               |
+| `--color-surface`    | `#fff69a`    | `#0d0b1a`               |
+| `--color-fg`         | `#0a0a12`    | `#e6f7ff`               |
+| `--color-accent`     | `#e6003a`    | `#fcee0a`               |
+| `--color-accent-alt` | `#006b78`    | `#00f0ff`               |
+| `--color-accent-hot` | `#e6003a`    | `#ff2a6d`               |
+| `--color-muted`      | `#4a4520`    | `#8c90b8`               |
+| `--color-border`     | `#0a0a12`    | `rgb(0 240 255 / 0.35)` |
+| `--color-bar-bg/-fg` | black/yellow | yellow/black            |
+| `--color-ink`        | `#05040b`    | (same)                  |
 
 Dark mode is applied by adding the `.dark` class to `<html>` (managed by the inline theme script + `ThemeToggle` script). An explicit `data-theme="light"` choice overrides the OS dark preference; with no JS, `prefers-color-scheme` is the fallback. Always use the CSS variables rather than hardcoded colors.
 
 ### Reusable CSS classes (defined in `src/styles/global.css`)
 
-- `.btn-brutal` / `.btn-brutal-filled` — primary button style with shadow and hover lift.
+Base element styles live in `@layer base` and these classes in `@layer components`, so Tailwind utilities can always override them.
+
+- `.btn-cyber` / `.btn-cyber-filled` — outlined neon / filled accent button with cut corner.
+- `.cyber-panel` — surface card with neon border and cut corner (`--cut` to resize). `.cyber-border` — plain 1px neon border.
+- `.hover-neon` — lift + inner glow + cyan border on hover.
 - `.tag` / `.tag-filled` — small monospaced uppercase label.
-- `.border-brutal` / `.border-brutal-thin` — thick/thin border.
-- `.shadow-brutal` / `.shadow-brutal-sm` — offset shadow.
-- `.hover-brutal` — adds the translate + shadow-grow hover animation.
-- `.glitch` — glitch keyframe animation on hover.
-- `.cursor-blink` — appends a blinking `_` cursor via `::after`.
-- `.animate-marquee` — continuous horizontal scroll (used in the footer copyright bar).
+- `.neon-text` / `.neon-text-alt` — accent / cyan text with glow.
+- `.hud-label`, `.neon-rule`, `.hud-corners` — HUD decorations.
+- `.glitch` — RGB-split glitch effect; requires `data-text` equal to the element's text.
+- `.flicker` — neon sign flicker. `.cursor-blink` — blinking `_` cursor.
+- `.animate-marquee` — continuous horizontal scroll (footer copyright bar).
+
+Animations are disabled under `prefers-reduced-motion: reduce`.

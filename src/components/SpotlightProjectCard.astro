@@ -23,18 +23,18 @@ const langColor = languageColors[project.language] || '#666666';
 const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 ---
 
-<article class="border-brutal shadow-brutal hover-brutal relative mb-12 bg-[var(--color-bg)]">
+<article class="group cyber-panel hover-neon mb-12" style="--cut: 28px">
 	<!-- Header -->
-	<div class="flex flex-wrap items-center justify-between gap-2 border-b border-b-[var(--border-thick)] bg-[var(--color-fg)] px-4 py-2 text-[var(--color-bg)]">
+	<div class="flex flex-wrap items-center justify-between gap-2 bg-[var(--color-bar-bg)] px-4 py-2 text-[var(--color-bar-fg)]">
 		<span class="font-mono text-xs font-bold tracking-wider uppercase">
-			<span class="text-[var(--color-accent)]">★</span> {t.spotlight_label}
-			{stats.version && <span class="text-[var(--color-accent)]">· {stats.version}</span>}
+			<span class="text-[var(--color-accent-hot)]">◆</span> {t.spotlight_label}
+			{stats.version && <span>· {stats.version}</span>}
 		</span>
 		<div class="flex items-center gap-4 font-mono text-xs">
 			{stats.stars !== null && <span title="GitHub stars">★ {stats.stars}</span>}
 			<span class="flex items-center gap-2">
 				<span
-					class="h-3 w-3 rounded-full"
+					class="h-2.5 w-2.5"
 					style={`background-color: ${langColor}`}
 					title={project.language}
 				></span>
@@ -45,21 +45,25 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 
 	<div class="grid md:grid-cols-[minmax(0,1fr)_2fr]">
 		<!-- Logo -->
-		<div class="flex items-center justify-center border-b-[var(--border-thick)] border-[var(--color-fg)] bg-[var(--color-accent)] p-8 md:border-r-[var(--border-thick)] md:border-b-0">
+		<div class="spotlight-logo relative flex items-center justify-center overflow-hidden border-b border-[var(--color-border)] p-8 md:border-r md:border-b-0">
 			<img
 				src={logo.src}
 				width="200"
 				height="200"
 				alt={`${project.name} logo`}
-				class="h-32 w-32 md:h-48 md:w-48"
+				class="relative h-32 w-32 drop-shadow-[0_0_18px_var(--color-accent-alt)] md:h-48 md:w-48"
 				loading="lazy"
 			/>
 		</div>
 
 		<!-- Content -->
 		<div class="p-6 md:p-8">
-			<h3 class="mb-2 text-3xl font-bold md:text-4xl">{project.name}</h3>
-			<p class="mb-4 font-mono text-sm tracking-wider uppercase">{project.description[locale]}</p>
+			<h3 class="glitch mb-2 text-3xl font-black md:text-4xl" data-text={project.name}>
+				{project.name}
+			</h3>
+			<p class="neon-text-alt mb-4 font-mono text-sm tracking-wider uppercase">
+				{project.description[locale]}
+			</p>
 			<p class="mb-5 leading-relaxed text-[var(--color-muted)]">
 				{project.longDescription[locale]}
 			</p>
@@ -88,7 +92,7 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 					href={downloadUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="btn-brutal btn-brutal-filled text-xs no-underline"
+					class="btn-cyber btn-cyber-filled text-xs no-underline"
 				>
 					{t.spotlight_download}
 					{stats.version && ` ${stats.version}`} ↓
@@ -98,7 +102,7 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 						href={project.homepage}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="btn-brutal text-xs no-underline"
+						class="btn-cyber text-xs no-underline"
 					>
 						{t.spotlight_website}
 					</a>
@@ -107,7 +111,7 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 					href={project.githubUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="btn-brutal text-xs no-underline"
+					class="btn-cyber text-xs no-underline"
 				>
 					<span class="inline-flex items-center gap-2">
 						<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -120,3 +124,18 @@ const downloadUrl = stats.releaseUrl ?? `${project.githubUrl}/releases/latest`;
 		</div>
 	</div>
 </article>
+
+<style>
+	/* Logo sits on a dark "screen" with a neon grid in both themes */
+	.spotlight-logo {
+		background-color: #05040b;
+		background-image:
+			radial-gradient(circle at 50% 50%, rgb(0 240 255 / 0.25), transparent 65%),
+			linear-gradient(rgb(0 240 255 / 0.1) 1px, transparent 1px),
+			linear-gradient(90deg, rgb(0 240 255 / 0.1) 1px, transparent 1px);
+		background-size:
+			100% 100%,
+			24px 24px,
+			24px 24px;
+	}
+</style>

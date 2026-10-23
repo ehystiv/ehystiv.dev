@@ -17,26 +17,24 @@ const { interest, locale, hidden = false } = Astro.props;
 	rel="noopener noreferrer"
 	data-interest
 	hidden={hidden}
-	class="group border-brutal hover:shadow-brutal relative block h-full border-dashed bg-[var(--color-bg)] p-6 no-underline transition-all duration-200 hover:-translate-y-1 hover:border-solid hover:bg-[var(--color-fg)] hover:text-[var(--color-bg)]"
+	class="group cyber-panel hover-neon block h-full p-6 no-underline"
 >
 	<div class="mb-2 flex items-center justify-between">
-		<h3 class="font-mono text-lg font-bold tracking-wider uppercase group-hover:text-[var(--color-accent)]">
+		<h3 class="font-mono text-base font-bold tracking-wider break-all uppercase transition-colors group-hover:text-[var(--color-accent)]">
 			{interest.name}
 		</h3>
-		<span class="text-xl font-bold opacity-0 transition-opacity group-hover:text-[var(--color-accent)] group-hover:opacity-100">
+		<span class="text-xl font-bold text-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100">
 			↗
 		</span>
 	</div>
 
-	<p class="mb-4 text-sm leading-relaxed text-[var(--color-muted)] group-hover:text-[var(--color-bg)]">
+	<p class="mb-4 text-sm leading-relaxed text-[var(--color-muted)]">
 		{interest.description[locale]}
 	</p>
 
 	<div class="flex flex-wrap gap-2">
 		{interest.tags.map((tag) => (
-			<span class="tag text-[10px] group-hover:border-[var(--color-bg)] group-hover:bg-[var(--color-bg)] group-hover:text-[var(--color-fg)]">
-				{tag}
-			</span>
+			<span class="tag text-[10px]">{tag}</span>
 		))}
 	</div>
 </a>

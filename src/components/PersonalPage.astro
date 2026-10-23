@@ -39,12 +39,15 @@ const hasPhotos = resolvedCategories.length > 0;
 
 <BaseLayout locale={locale} title={t.personal.meta_title} description={t.personal.meta_description}>
 	<!-- Page header -->
-	<section class="border-b-4 border-[var(--color-fg)]">
-		<div class="mx-auto max-w-7xl px-6 py-20">
-			<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
-				{t.personal.pretitle}
-			</p>
-			<h1 class="text-4xl font-bold md:text-6xl">{t.personal.title}</h1>
+	<section class="relative overflow-hidden border-b border-[var(--color-border)]">
+		<div class="page-grid absolute inset-0" aria-hidden="true"></div>
+		<div class="relative mx-auto max-w-7xl px-6 py-20">
+			<p class="hud-label mb-2">{t.personal.pretitle}</p>
+			<h1 class="text-4xl font-black md:text-6xl">
+				<span class="glitch neon-text" data-text={t.personal.title}>
+					{t.personal.title}
+				</span>
+			</h1>
 			<p class="mt-4 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)]">
 				{t.personal.description}
 			</p>
@@ -52,16 +55,14 @@ const hasPhotos = resolvedCategories.length > 0;
 	</section>
 
 	<!-- Photo portfolio -->
-	<section id="photos" class="scroll-mt-4 border-b-4 border-[var(--color-fg)]">
+	<section id="photos" class="scroll-mt-4 border-b border-[var(--color-border)]">
 		<div class="mx-auto max-w-7xl px-6 py-20">
 			<div class="mb-12 flex items-end justify-between">
 				<div>
-					<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
-						{t.personal.photos.pretitle}
-					</p>
-					<h2 class="text-4xl font-bold md:text-5xl">{t.personal.photos.title}</h2>
+					<p class="hud-label mb-2">{t.personal.photos.pretitle}</p>
+					<h2 class="text-4xl font-black md:text-5xl">{t.personal.photos.title}</h2>
 				</div>
-				<div class="ml-8 hidden h-1 flex-1 bg-[var(--color-fg)] md:block"></div>
+				<div class="neon-rule mb-3 ml-8 hidden flex-1 md:block"></div>
 			</div>
 
 			{hasPhotos ? (
@@ -70,11 +71,11 @@ const hasPhotos = resolvedCategories.length > 0;
 						<div id={`photos-${category.id}`} class="scroll-mt-4">
 							<!-- Category header -->
 							<div class="mb-6 flex items-center gap-4">
-								<h3 class="font-mono text-lg font-bold tracking-wider text-[var(--color-accent)] uppercase">
+								<h3 class="neon-text font-mono text-lg font-bold tracking-wider uppercase">
 									{category.label[locale]}
 								</h3>
 								<span class="tag text-[10px]">{category.photos.length}</span>
-								<div class="h-0.5 flex-1 bg-[var(--color-fg)]"></div>
+								<div class="neon-rule flex-1"></div>
 							</div>
 
 							<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -85,17 +86,17 @@ const hasPhotos = resolvedCategories.length > 0;
 										data-full={photo.image.src}
 										data-caption={photo.alt[locale]}
 										data-meta={photo.meta}
-										class="group border-brutal hover-brutal block cursor-pointer bg-[var(--color-bg)] p-0 text-left"
+										class="group cyber-panel hover-neon block w-full cursor-pointer p-0 text-left"
 										aria-label={photo.alt[locale]}
 									>
 										<img
 											src={photo.image.src}
 											alt={photo.alt[locale]}
 											loading="lazy"
-											class="aspect-square w-full object-cover"
+											class="aspect-square w-full object-cover transition-[filter] duration-300 group-hover:saturate-125"
 										/>
 										{photo.meta && (
-											<div class="flex items-center justify-between border-t-4 border-[var(--color-fg)] bg-[var(--color-fg)] px-3 py-1 text-[var(--color-bg)]">
+											<div class="flex items-center justify-between border-t border-[var(--color-border)] px-3 py-2 text-[var(--color-muted)] transition-colors group-hover:text-[var(--color-accent-alt)]">
 												<span class="font-mono text-xs font-bold tracking-wider uppercase">
 													{photo.meta}
 												</span>
@@ -111,10 +112,8 @@ const hasPhotos = resolvedCategories.length > 0;
 					))}
 				</div>
 			) : (
-				<div class="border-brutal border-dashed p-12 text-center">
-					<p class="font-mono text-xl font-bold uppercase">
-						{t.personal.photos.empty_title}
-					</p>
+				<div class="cyber-panel p-12 text-center">
+					<p class="font-mono text-xl font-bold uppercase">{t.personal.photos.empty_title}</p>
 					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
 						{t.personal.photos.empty_text}
 					</p>
@@ -125,22 +124,18 @@ const hasPhotos = resolvedCategories.length > 0;
 
 	<!-- Blog (hidden until PUBLIC_BLOG_ENABLED=true) -->
 	{blogEnabled && (
-		<section id="blog" class="scroll-mt-4 border-b-4 border-[var(--color-fg)]">
+		<section id="blog" class="scroll-mt-4 border-b border-[var(--color-border)]">
 			<div class="mx-auto max-w-7xl px-6 py-20">
 				<div class="mb-12 flex items-end justify-between">
 					<div>
-						<p class="mb-2 font-mono text-sm tracking-widest text-[var(--color-muted)] uppercase">
-							{t.personal.blog.pretitle}
-						</p>
-						<h2 class="text-4xl font-bold md:text-5xl">{t.personal.blog.title}</h2>
+						<p class="hud-label mb-2">{t.personal.blog.pretitle}</p>
+						<h2 class="text-4xl font-black md:text-5xl">{t.personal.blog.title}</h2>
 					</div>
-					<div class="ml-8 hidden h-1 flex-1 bg-[var(--color-fg)] md:block" />
+					<div class="neon-rule mb-3 ml-8 hidden flex-1 md:block" />
 				</div>
 
-				<div class="border-brutal border-dashed p-12 text-center">
-					<p class="font-mono text-xl font-bold uppercase">
-						{t.personal.blog.empty_title}
-					</p>
+				<div class="cyber-panel p-12 text-center">
+					<p class="font-mono text-xl font-bold uppercase">{t.personal.blog.empty_title}</p>
 					<p class="mx-auto mt-2 max-w-md text-[var(--color-muted)]">
 						{t.personal.blog.empty_text}
 					</p>
@@ -153,24 +148,24 @@ const hasPhotos = resolvedCategories.length > 0;
 	{hasPhotos && (
 		<dialog
 			id="photo-lightbox"
-			class="shadow-brutal fixed inset-0 m-auto max-h-[90vh] w-full max-w-4xl border-4 border-[var(--color-fg)] bg-[var(--color-bg)] p-0 backdrop:bg-black/70"
+			class="lightbox fixed inset-0 m-auto max-h-[90vh] w-full max-w-4xl border border-[var(--color-accent-alt)] bg-[var(--color-surface)] p-0 text-[var(--color-fg)] backdrop:bg-black/80 backdrop:backdrop-blur-sm"
 		>
 			<figure class="m-0">
 				<img
 					id="lightbox-img"
 					src=""
 					alt=""
-					class="max-h-[75vh] w-full border-b-4 border-[var(--color-fg)] object-contain"
+					class="max-h-[75vh] w-full border-b border-[var(--color-border)] bg-black object-contain"
 				/>
 				<figcaption class="flex items-center justify-between gap-4 px-4 py-3">
-					<span id="lightbox-caption" class="font-mono text-sm font-bold uppercase" />
+					<span id="lightbox-caption" class="neon-text font-mono text-sm font-bold uppercase" />
 					<span id="lightbox-meta" class="font-mono text-xs text-[var(--color-muted)]" />
 				</figcaption>
 			</figure>
 			<button
 				id="lightbox-close"
 				type="button"
-				class="btn-brutal btn-brutal-filled absolute top-3 right-3 px-3 py-1 text-sm"
+				class="btn-cyber btn-cyber-filled absolute top-3 right-3 px-3 py-1 text-sm"
 				aria-label="Close"
 			>
 				✕
@@ -178,6 +173,20 @@ const hasPhotos = resolvedCategories.length > 0;
 		</dialog>
 	)}
 </BaseLayout>
+
+<style>
+	.page-grid {
+		background-image:
+			linear-gradient(var(--color-grid) 1px, transparent 1px),
+			linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+		background-size: 48px 48px;
+		mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+	}
+
+	.lightbox {
+		box-shadow: 0 0 32px rgb(0 240 255 / 0.35);
+	}
+</style>
 
 <script>
 	// Photo lightbox: fill the shared <dialog> from the clicked card and open it modally
