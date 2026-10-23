@@ -2,11 +2,11 @@
 @plugin '@tailwindcss/typography';
 
 /* ============================================
-   CYBERPUNK / NIGHT CITY THEME - ehystiv.dev
+   CYBERPUNK / NEON CITY THEME - ehystiv.dev
    ============================================ */
 
 /* CSS Variables
-   Light = "Day" (Night City yellow), Dark = "Night" (neon on black). */
+   Light = "Day" (neon yellow), Dark = "Night" (neon on black). */
 :root {
 	--color-bg: #fcee0a;
 	--color-surface: #fff69a;
