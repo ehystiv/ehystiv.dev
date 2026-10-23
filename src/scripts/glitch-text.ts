@@ -6,7 +6,7 @@ const BURST = 400;
 
 const randomGlyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 
-const scramble = (el: HTMLElement) => {
+export const scramble = (el: HTMLElement, duration = DURATION) => {
 	const finalText = el.dataset.scrambleText ?? el.textContent ?? '';
 	el.dataset.scrambleText = finalText;
 	el.setAttribute('aria-label', finalText);
@@ -14,7 +14,7 @@ const scramble = (el: HTMLElement) => {
 
 	const start = performance.now();
 	const frame = (now: number) => {
-		const progress = Math.min((now - start) / DURATION, 1);
+		const progress = Math.min((now - start) / duration, 1);
 		// Characters lock in left to right; whitespace is never scrambled so line breaks stay put
 		const revealed = Math.floor(progress * finalText.length);
 		el.textContent = [...finalText]

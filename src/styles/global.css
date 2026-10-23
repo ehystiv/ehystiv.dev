@@ -583,7 +583,7 @@
 	}
 
 	/* Text being decrypted by the scramble script */
-	[data-scramble].is-scrambling {
+	.is-scrambling {
 		color: var(--color-accent-alt);
 		text-shadow: var(--glow-alt);
 	}

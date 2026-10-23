@@ -90,38 +90,92 @@ const navLinks = [
 		</div>
 	</div>
 
-	<!-- Mobile Menu Overlay -->
+	<!-- Mobile Menu Overlay: full-screen, opens like a CRT turning on, items glitch in one by one -->
 	<div
 		id="mobile-menu"
-		class="hidden border-t border-[var(--color-border)] bg-[var(--color-surface)] p-6 md:hidden"
+		class="mobile-menu fixed inset-0 z-[60] md:hidden"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Menu"
+		data-state="closed"
+		hidden
 	>
-		<nav class="flex flex-col gap-6 text-center">
-			{navLinks.map((link) => (
-				<a
-					href={link.href}
-					class="nav-link glitch-hover font-mono text-lg font-bold tracking-wider uppercase"
-				>
-					{link.label}
-				</a>
-			))}
-			<a
-				href="https://github.com/ehystiv"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="btn-cyber mx-auto inline-block no-underline"
+		<div class="menu-panel flex h-full flex-col bg-[var(--color-bg)]">
+			<div class="menu-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+			<div
+				class="menu-sign pointer-events-none absolute right-4 bottom-24 font-bold"
+				aria-hidden="true"
 			>
-				{t.nav.github}
-			</a>
-
-			<div class="flex justify-center gap-4 border-t border-[var(--color-border)] pt-4">
-				<a
-					href={langSwitchHref}
-					class="nav-link glitch-hover font-mono text-lg font-bold uppercase"
-				>
-					{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
-				</a>
+				メニュー
 			</div>
-		</nav>
+
+			<!-- Top bar -->
+			<div class="relative flex items-center justify-between border-b border-[var(--color-border)] px-6 py-5">
+				<span class="menu-meta font-mono text-xs tracking-[0.3em] text-[var(--color-accent-alt)] uppercase">
+					// NAV.SYS <span class="text-[var(--color-accent-hot)]">ACCESS GRANTED</span>
+				</span>
+				<button
+					id="mobile-menu-close"
+					type="button"
+					class="btn-cyber px-3 py-2 text-sm"
+					aria-label="Close menu"
+				>
+					✕
+				</button>
+			</div>
+
+			<!-- Links -->
+			<nav class="relative flex-1 overflow-y-auto px-6 py-8">
+				<ul class="flex flex-col">
+					{navLinks.map((link, i) => (
+						<li class="menu-item border-b border-[var(--color-border)]" style={`--i: ${i}`}>
+							<a href={link.href} class="group flex items-center gap-4 py-5 no-underline">
+								<span class="font-mono text-xs text-[var(--color-accent-hot)]">
+									{String(i + 1).padStart(2, '0')}
+								</span>
+								<span
+									class="menu-label glitch-hover font-display text-3xl font-black uppercase transition-colors group-hover:text-[var(--color-accent)]"
+									data-menu-scramble
+								>
+									{link.label}
+								</span>
+								<span class="ml-auto font-mono text-[var(--color-accent-alt)] opacity-60 transition-opacity group-hover:opacity-100">
+									→
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+
+				<div
+					class="menu-item mt-10 flex flex-wrap items-center gap-6"
+					style={`--i: ${navLinks.length}`}
+				>
+					<a
+						href="https://github.com/ehystiv"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-cyber btn-cyber-filled no-underline"
+					>
+						{t.nav.github}
+					</a>
+					<a
+						href={langSwitchHref}
+						class="nav-link glitch-hover font-mono text-sm font-bold tracking-wider uppercase"
+					>
+						{locale === 'it' ? 'Switch to EN' : 'Passa a IT'}
+					</a>
+				</div>
+			</nav>
+
+			<!-- HUD footer -->
+			<div class="menu-meta relative flex justify-between border-t border-[var(--color-border)] px-6 py-3 font-mono text-[10px] tracking-widest text-[var(--color-muted)] uppercase">
+				<span>EHYSTIV.DEV // v2.077</span>
+				<span>
+					LINK <span class="text-[var(--color-accent)]">SECURE</span>
+				</span>
+			</div>
+		</div>
 	</div>
 
 	<!-- Neon edge under the header -->
@@ -211,9 +265,151 @@ const navLinks = [
 			transform: translateY(-66.666%);
 		}
 	}
+	/* ---------- Mobile menu ---------- */
+	.mobile-menu .menu-panel {
+		position: relative;
+		background-image:
+			radial-gradient(ellipse 70% 40% at 100% 0%, rgb(255 42 109 / 0.18), transparent 70%),
+			radial-gradient(ellipse 60% 40% at 0% 100%, rgb(0 240 255 / 0.12), transparent 70%);
+	}
+
+	.menu-grid {
+		background-image:
+			linear-gradient(var(--color-grid) 1px, transparent 1px),
+			linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+		background-size: 40px 40px;
+	}
+
+	.menu-sign {
+		writing-mode: vertical-rl;
+		font-size: 3.5rem;
+		letter-spacing: 0.1em;
+		color: transparent;
+		-webkit-text-stroke: 1px var(--color-accent-hot);
+		filter: drop-shadow(0 0 6px var(--color-accent-hot));
+		opacity: 0.35;
+	}
+
+	/* Open: a neon line appears in the middle, stretches horizontally, then the screen opens vertically */
+	.mobile-menu[data-state='open'] .menu-panel {
+		animation: crt-on 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+	}
+
+	.mobile-menu[data-state='closing'] .menu-panel {
+		animation: crt-off 0.4s cubic-bezier(0.6, 0, 0.8, 0.2) both;
+	}
+
+	@keyframes crt-on {
+		0% {
+			clip-path: inset(49.6% 50% 49.6% 50%);
+			filter: brightness(1.3);
+			background-color: #c8fdff;
+		}
+		35% {
+			clip-path: inset(49.6% 0 49.6% 0);
+			filter: brightness(1.3);
+			background-color: #c8fdff;
+		}
+		55% {
+			filter: brightness(1.8);
+			background-color: var(--color-bg);
+		}
+		100% {
+			clip-path: inset(0 0 0 0);
+			filter: none;
+		}
+	}
+
+	@keyframes crt-off {
+		0% {
+			clip-path: inset(0 0 0 0);
+			filter: none;
+		}
+		55% {
+			clip-path: inset(49.6% 0 49.6% 0);
+			filter: brightness(1.3);
+			background-color: #c8fdff;
+		}
+		100% {
+			clip-path: inset(49.6% 50% 49.6% 50%);
+			filter: brightness(1.3);
+			background-color: #c8fdff;
+		}
+	}
+
+	/* Items: staggered slice-in with RGB split, after the screen has opened */
+	.mobile-menu[data-state='open'] .menu-item {
+		animation: menu-item-in 0.5s steps(6, end) both;
+		animation-delay: calc(0.45s + var(--i) * 0.09s);
+	}
+
+	.mobile-menu[data-state='open'] .menu-meta {
+		animation: menu-meta-in 0.4s steps(4, end) 0.4s both;
+	}
+
+	.mobile-menu[data-state='closing'] .menu-item,
+	.mobile-menu[data-state='closing'] .menu-meta {
+		opacity: 0;
+		transition: opacity 0.1s steps(2);
+	}
+
+	@keyframes menu-item-in {
+		0% {
+			opacity: 0;
+			transform: translateX(-30px) skewX(-12deg);
+			clip-path: inset(0 100% 0 0);
+		}
+		30% {
+			opacity: 1;
+			transform: translateX(8px) skewX(8deg);
+			clip-path: inset(0 40% 0 0);
+			text-shadow:
+				-4px 0 var(--color-accent-alt),
+				4px 0 var(--color-accent-hot);
+		}
+		55% {
+			transform: translateX(-3px);
+			clip-path: inset(30% 0 20% 0);
+			text-shadow:
+				3px 0 var(--color-accent-alt),
+				-3px 0 var(--color-accent-hot);
+		}
+		75% {
+			transform: translateX(2px);
+			clip-path: inset(0 0 0 0);
+		}
+		100% {
+			opacity: 1;
+			transform: none;
+			clip-path: none;
+			text-shadow: none;
+		}
+	}
+
+	@keyframes menu-meta-in {
+		0%,
+		50% {
+			opacity: 0;
+		}
+		25%,
+		75%,
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-menu .menu-panel,
+		.mobile-menu .menu-item,
+		.mobile-menu .menu-meta {
+			animation: none !important;
+		}
+	}
 </style>
 
 <script>
+	import { scramble } from '../scripts/glitch-text';
+
 	// Sticky ticker: start flipping when the header scrolls out of view
 	const header = document.getElementById('site-header');
 	const ticker = document.getElementById('header-ticker');
@@ -241,23 +437,68 @@ const navLinks = [
 		setInterval(updateTime, 1000);
 	}
 
-	// Mobile menu
+	// Mobile menu: full-screen overlay with CRT open/close and glitching items
 	const menuButton = document.getElementById('mobile-menu-button');
 	const mobileMenu = document.getElementById('mobile-menu');
+	const closeButton = document.getElementById('mobile-menu-close');
 
 	if (menuButton && mobileMenu) {
-		const setMenuOpen = (open: boolean) => {
-			mobileMenu.classList.toggle('hidden', !open);
-			menuButton.textContent = open ? '✕' : 'MENU';
-			menuButton.setAttribute('aria-expanded', String(open));
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const ITEM_DELAY = 450;
+		const ITEM_STAGGER = 90;
+		let closeTimer: number | undefined;
+
+		const openMenu = () => {
+			window.clearTimeout(closeTimer);
+			mobileMenu.hidden = false;
+			mobileMenu.dataset.state = 'open';
+			menuButton.setAttribute('aria-expanded', 'true');
+			document.documentElement.style.overflow = 'hidden';
+			closeButton?.focus({ preventScroll: true });
+
+			if (reducedMotion.matches) return;
+			// Decrypt each label as its row glitches in
+			mobileMenu.querySelectorAll<HTMLElement>('[data-menu-scramble]').forEach((label, i) => {
+				label.textContent = label.dataset.scrambleText ?? label.textContent;
+				window.setTimeout(() => scramble(label, 450), ITEM_DELAY + i * ITEM_STAGGER);
+			});
 		};
 
-		menuButton.addEventListener('click', () => {
-			setMenuOpen(mobileMenu.classList.contains('hidden'));
+		const closeMenu = (restoreFocus = true) => {
+			if (mobileMenu.dataset.state !== 'open') return;
+			menuButton.setAttribute('aria-expanded', 'false');
+			document.documentElement.style.overflow = '';
+			const finish = () => {
+				mobileMenu.hidden = true;
+				mobileMenu.dataset.state = 'closed';
+			};
+			if (reducedMotion.matches) {
+				finish();
+			} else {
+				mobileMenu.dataset.state = 'closing';
+				closeTimer = window.setTimeout(finish, 400);
+			}
+			if (restoreFocus) menuButton.focus({ preventScroll: true });
+		};
+
+		menuButton.addEventListener('click', openMenu);
+		closeButton?.addEventListener('click', () => closeMenu());
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') closeMenu();
 		});
 
 		mobileMenu.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', () => setMenuOpen(false));
+			link.addEventListener('click', () => closeMenu(false));
+		});
+
+		// Leaving the mobile breakpoint with the menu open: close it instantly
+		window.matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+			if (!event.matches) return;
+			closeMenu(false);
+			window.clearTimeout(closeTimer);
+			mobileMenu.hidden = true;
+			mobileMenu.dataset.state = 'closed';
 		});
 	}
 </script>
